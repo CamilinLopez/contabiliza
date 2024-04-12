@@ -5,10 +5,6 @@ services:
     build: ./backend
     volumes:
       - ./backend:/myback
-    depends_on:
-      - database
-    links:
-      - database
     ports:
       - 3001:3001
     command: [ "npm", "start" ]
@@ -18,10 +14,8 @@ services:
     volumes:
       - ./frontend:/appfront
     depends_on:
-      - database
       - server
     links:
-      - database
       - server
     ports:
       - 3000:3000
