@@ -52,6 +52,26 @@ const ParrowDown = ({ text }: { text: string }) => (
 );
 
 export default function Navigation() {
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = (scrollOffset: number) => {
+    const container = document.getElementById("printTextContainer");
+    if (!container) return;
+
+    const maxScroll = container.scrollWidth - container.clientWidth + 10;
+
+    const newPosition = scrollPosition + scrollOffset;
+
+    if (newPosition < 0) {
+      setScrollPosition(0); // Evitar que el desplazamiento sea menor que 0
+    } else if (newPosition > maxScroll) {
+      setScrollPosition(maxScroll); // Evitar que el desplazamiento sea mayor que el máximo
+    } else {
+      container.scrollLeft = newPosition;
+      setScrollPosition(newPosition);
+    }
+  };
+
   return (
     <div className="bg-white w-full flex flex-col border-b border-gray-400">
       <div className="bg-custom-azul-1 px-[40px] py-[13px] w-full">
@@ -79,10 +99,35 @@ export default function Navigation() {
         </div>
 
         <div className="flex items-center w-full">
-          <div className="w-full xl:w-11/12 overflow-x-hidden">
+          <button
+            className="block xl:hidden mx-2"
+            onClick={() => handleScroll(-20)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              className="w-6 h-6 text-custom-gris hover:text-custom-naranja"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <div
+            className="w-full xl:w-11/12 overflow-x-hidden"
+            id="printTextContainer"
+          >
             <PrintText />
           </div>
-          <button className="block xl:hidden mx-2">
+          <button
+            className="block xl:hidden mx-2"
+            onClick={() => handleScroll(20)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -115,7 +160,6 @@ export default function Navigation() {
             </svg>
           </button>
         </div>
-        
       </div>
       <div className="h-[40px] flex gap-x-16 items-center px-16">
         <Link
