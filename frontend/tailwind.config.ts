@@ -7,14 +7,14 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    // screens: {
-    //   sm: "640px",
-    //   md: "768px",
-    //   lg: "1000px",
-    //   xl: "1280px",
-    //   "2xl": "1536px",
-    //   "3xl": "1000px",
-    // },
+    screens: {
+      xs: "450px",
+      sm: "575px",
+      md: "768px",
+      lg: "930px",
+      xl: "1200px",
+      "2xl": "1400px",
+    },
     extend: {
       fontFamily: {
         ember: ['"Amazon Ember"', "sans-serif"],

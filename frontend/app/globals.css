@@ -106,6 +106,9 @@ body {
   font-family: "Amazon Ember", sans-serif;
 }
 
+input#togglePlan:checked ~ .dot {
+  @apply translate-x-full;
+}
 
 @layer utilities {
   .text-balance {
