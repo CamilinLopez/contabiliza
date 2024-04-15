@@ -52,24 +52,38 @@ const ParrowDown = ({ text }: { text: string }) => (
 );
 
 export default function Navigation() {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [count, setCount] = useState<number>(0);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
-  const handleScroll = (scrollOffset: number) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    const buttonName = event.currentTarget.name;
     const container = document.getElementById("printTextContainer");
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
     if (!container) return;
 
-    const maxScroll = container.scrollWidth - container.clientWidth + 10;
-
-    const newPosition = scrollPosition + scrollOffset;
-
-    if (newPosition < 0) {
-      setScrollPosition(0); // Evitar que el desplazamiento sea menor que 0
-    } else if (newPosition > maxScroll) {
-      setScrollPosition(maxScroll); // Evitar que el desplazamiento sea mayor que el máximo
-    } else {
-      container.scrollLeft = newPosition;
-      setScrollPosition(newPosition);
-    }
+    const id: NodeJS.Timeout = setInterval(() => {
+      setIntervalId(id);
+      setCount((prevCount) => {
+        if (buttonName === "startRight" && prevCount < container.clientWidth) {
+          container.scrollLeft = prevCount;
+          return prevCount + 1;
+        }
+        if (buttonName === "startLeft" && prevCount > 0) {
+          container.scrollLeft = prevCount - 400;
+          return prevCount - 1;
+        } else {
+          clearInterval(id);
+          setIntervalId(null);
+          return prevCount;
+        }
+      });
+    }, 5);
   };
 
   return (
@@ -101,7 +115,8 @@ export default function Navigation() {
         <div className="flex items-center w-full">
           <button
             className="block xl:hidden mx-2"
-            onClick={() => handleScroll(-20)}
+            onClick={handleClick}
+            name="startLeft"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +141,8 @@ export default function Navigation() {
           </div>
           <button
             className="block xl:hidden mx-2"
-            onClick={() => handleScroll(20)}
+            onClick={handleClick}
+            name="startRight"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -192,85 +208,3 @@ export default function Navigation() {
     </div>
   );
 }
-
-// export default function Navigbation() {
-//   const [scrollPosition, setScrollPosition] = useState(0);
-
-//   const handleScroll = (scrollOffset: number) => {
-//     const container = document.getElementById("printTextContainer");
-//     if (container) {
-//       const newPosition = scrollPosition + scrollOffset;
-//       container.scrollLeft = newPosition;
-//       setScrollPosition(newPosition);
-//     }
-//   };
-
-//   return (
-//     <div className="bg-white w-full flex flex-col border-b border-gray-400">
-//       <div className="bg-custom-azul-1 px-[40px] py-[13px] w-full">
-//         <div className="flex items-center justify-between">
-//           <h1>
-//             <span className="font-ember text-white font-[300] text-[34px]">
-//               Conta
-//             </span>
-//             <span className="font-ember text-custom-naranja font-[300] text-[34px]">
-//               Viliza
-//             </span>
-//           </h1>
-//           <div className="flex gap-x-5 items-center">
-//             <Link
-//               href={"/"}
-//               className="font-ember font-[600] text-custom-gris text-[13px] hover:text-custom-naranja"
-//             >
-//               Contacte con nosotros
-//             </Link>
-//             <ParrowDown text="Soporte" />
-//             <ParrowDown text="Idioma" />
-//             <ParrowDown text="Mi cuenta" />
-//             <CustomLink href="/">Inicie sesión en la consola</CustomLink>
-//           </div>
-//         </div>
-//         <div
-//           className="py-[5px] w-11/12 overflow-x-auto md:overflow-x-hidden"
-//           id="printTextContainer"
-//         >
-//           {" "}
-//           {/* Agregamos un ID */}
-//           <PrintText />
-//         </div>
-//         <button onClick={() => handleScroll(-50)}>{"<"}</button>{" "}
-//         {/* Flecha izquierda */}
-//         <button onClick={() => handleScroll(50)}>{">"}</button>{" "}
-//         {/* Flecha derecha */}
-//       </div>
-//       <div className="h-[40px] flex gap-x-16 items-center px-16">
-//         <Link
-//           href={"/"}
-//           className="font-ember font-[600] text-[16px] text-custom-azul-2 hover:text-custom-azul-3"
-//         >
-//           Consola de administración de ContaViliza
-//         </Link>
-//         <div className="flex gap-x-6">
-//           <Link
-//             href={"/"}
-//             className="font-ember font-[600] text-[13px] hover:text-custom-azul-3"
-//           >
-//             Información general
-//           </Link>
-//           <Link
-//             href={"/"}
-//             className="font-ember font-[600] text-[13px] hover:text-custom-azul-3"
-//           >
-//             Caracterízticas
-//           </Link>
-//           <Link
-//             href={"/"}
-//             className="font-ember font-[600] text-[13px] hover:text-custom-azul-3"
-//           >
-//             Preguntas frecuentes
-//           </Link>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
