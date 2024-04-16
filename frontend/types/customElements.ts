@@ -3,8 +3,9 @@ import Link from "next/link";
 
 export interface CustomButtonProps {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  children: React.ReactNode;
+  // children: React.ReactNode;
   className?: string;
+  name: string;
 }
 
 export interface CustomLinkProps {
