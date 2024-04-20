@@ -84,40 +84,45 @@ export default function Navigation() {
   };
 
   return (
-    <div className="bg-white w-full flex flex-col border-b border-gray-400">
-      <div className="bg-custom-azul-1 px-[40px] py-[13px] w-full h-[110px] xl:h-[100px]">
-        <div className="flex items-center justify-between">
-          <h1>
-            <span className="font-ember text-white font-[300] text-[34px]">Conta</span>
-            <span className="font-ember text-custom-naranja font-[300] text-[34px]">Viliza</span>
-          </h1>
-          <div className="flex gap-x-5 items-center">
-            <Link href={'/'} className="font-ember font-[600] text-custom-gris text-[13px] hover:text-custom-naranja">
-              Contacte con nosotros
-            </Link>
-            <ParrowDown text="Soporte" />
-            <ParrowDown text="Idioma" />
-            <ParrowDown text="Mi cuenta" />
-            <CustomLink href="/">Inicie sesión en la consola</CustomLink>
+    <div id="navbarConsole" className="bg-custom-azul-1 w-full border-b border-gray-400">
+      <div className="contenedor">
+        <div className="h-[80px]">
+          <div className="flex items-center justify-between">
+            <div className="">
+              <Link href={'/'}>
+                <h1>
+                  <span className="font-ember text-white font-[300] text-[34px]">Conta</span>
+                  <span className="font-ember text-custom-naranja font-[300] text-[34px]">Viliza</span>
+                </h1>
+              </Link>
+            </div>
+            <div className="flex items-center gap-x-5 w-auto">
+              <Link href={'/'} className="font-ember font-bold text-custom-gris text-[13px] hover:text-custom-naranja">
+                Contacte con nosotros
+              </Link>
+              <ParrowDown text="Soporte" />
+              <ParrowDown text="Idioma" />
+              <ParrowDown text="Mi cuenta" />
+              <CustomLink href="/" className='w-[213px]' >Inicie sesión en la consola</CustomLink>
+            </div>
           </div>
+          <div className={`flex items-center ${Magnific && 'hidden'}`}>
+            <ArrowLeft name="startLeft" onClick={handleClickArrows} className="block xl:hidden" />
+            <div id="printTextContainer" className="overflow-x-hidden">
+              <PrintText />
+            </div>
+            <ArrowRight name="startRight" onClick={handleClickArrows} className="block xl:hidden" />
+            <MagnificButton name="" onClick={handleClickMagnific} className="xl:mx-10 mx-3" />
+          </div>
+          {Magnific && (
+            <div className="flex items-center justify-center">
+              <input type="text" placeholder="Bucar" className={`focus:outline-none w-[600px]  h-[34px]`} />
+              <CloseButton name="colseIntput" onClick={() => setMagnific(false)} className="" />
+            </div>
+          )}
         </div>
-
-        <div className={`flex items-center w-full ${Magnific && 'hidden'}`}>
-          <ArrowLeft name="startLeft" onClick={handleClickArrows} className="block xl:hidden" />
-          <div className="w-full xl:w-11/12 overflow-x-hidden mx-2" id="printTextContainer">
-            <PrintText />
-          </div>
-          <ArrowRight name="startRight" onClick={handleClickArrows} className="block xl:hidden" />
-          <MagnificButton name="" onClick={handleClickMagnific} className="xl:mx-6 mx-2" />
-        </div>
-        {Magnific && (
-          <div className="flex items-center     justify-center  xl:-my-2">
-            <input type="text" placeholder="Bucar" className={`focus:outline-none w-[600px]  h-[34px]`} />
-            <CloseButton name="colseIntput" onClick={() => setMagnific(false)} className="" />
-          </div>
-        )}
       </div>
-      <div className="h-[40px] flex gap-x-16 items-center px-16">
+      <div className="bg-white flex items-center gap-x-16 px-20 h-10">
         <Link href={'/'} className="font-ember font-[600] text-[16px] text-custom-azul-2 hover:text-custom-azul-3">
           Consola de administración de ContaViliza
         </Link>
