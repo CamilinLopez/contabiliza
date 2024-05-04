@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CustomLink } from '../utils/customElements';
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, CloseButton, MagnificButton } from './customElemets';
+import { Icon } from '../utils/fracments';
 
 const listOptions: string[] = [
   're:Invent',
@@ -90,10 +91,7 @@ export default function Navigation() {
           <div className="flex items-center justify-between">
             <div className="">
               <Link href={'/'}>
-                <h1>
-                  <span className="font-ember text-white font-[300] text-[34px]">Conta</span>
-                  <span className="font-ember text-custom-naranja font-[300] text-[34px]">Viliza</span>
-                </h1>
+                <Icon styles="text-[34px]" />
               </Link>
             </div>
             <div className="flex items-center gap-x-5 w-auto">
@@ -103,7 +101,9 @@ export default function Navigation() {
               <ParrowDown text="Soporte" />
               <ParrowDown text="Idioma" />
               <ParrowDown text="Mi cuenta" />
-              <CustomLink href="/" className='w-[213px]' >Inicie sesión en la consola</CustomLink>
+              <CustomLink href="/" className="w-[213px]">
+                Inicie sesión en la consola
+              </CustomLink>
             </div>
           </div>
           <div className={`flex items-center ${Magnific && 'hidden'}`}>

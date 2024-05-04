@@ -25,7 +25,7 @@ export default function Management() {
             </CustomLink>
           </div>
           <div>
-            <Image className="" alt="landing" src={'/images/init.svg'} width={350} height={350} />
+            <Image className="" alt="landing" src={'/images/init.svg'} width={350} height={350} priority />
           </div>
         </div>
       </div>
