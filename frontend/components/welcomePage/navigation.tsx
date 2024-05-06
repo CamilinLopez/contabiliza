@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { CustomLink } from '../utils/customElements';
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, CloseButton, MagnificButton } from './customElemets';
-import { Icon } from '../utils/fracments';
+import { Icon, ParrowDown } from '../utils/fracments';
 
 const listOptions: string[] = [
   're:Invent',
@@ -29,21 +29,6 @@ const PrintText = () => {
     </div>
   );
 };
-
-const ParrowDown = ({ text }: { text: string }) => (
-  <div className="flex items-center gap-x-[2px] text-custom-gris hover:text-custom-naranja cursor-pointer">
-    <p className="font-ember font-[600] text-[13px]">{text}</p>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-3 h-3 text-current">
-      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-    </svg>
-  </div>
-);
 
 export default function Navigation() {
   const [, setCount] = useState<number>(0);
@@ -85,7 +70,7 @@ export default function Navigation() {
   };
 
   return (
-    <div id="navbarConsole" className="bg-custom-azul-1 w-full border-b border-gray-400">
+    <div id="navbarInit" className="bg-custom-azul-1 w-full border-b border-gray-400">
       <div className="contenedor">
         <div className="h-[80px]">
           <div className="flex items-center justify-between">
@@ -98,9 +83,9 @@ export default function Navigation() {
               <Link href={'/'} className="font-ember font-bold text-custom-gris text-[13px] hover:text-custom-naranja">
                 Contacte con nosotros
               </Link>
-              <ParrowDown text="Soporte" />
-              <ParrowDown text="Idioma" />
-              <ParrowDown text="Mi cuenta" />
+              <ParrowDown text="Soporte" styles="font-ember font-[600] text-[13px]" />
+              <ParrowDown text="Idioma" styles="font-ember font-[600] text-[13px]" />
+              <ParrowDown text="Mi cuenta" styles="font-ember font-[600] text-[13px]" />
               <CustomLink href="/" className="w-[213px]">
                 Inicie sesión en la consola
               </CustomLink>

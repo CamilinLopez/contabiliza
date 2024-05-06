@@ -44,7 +44,7 @@ const config: Config = {
         xs: '450px',
         sm: '575px',
         md: '700px',
-        lg: '750px',
+        lg: '1100px',
         xl: '1200px',
         '2xl': '1400px',
       },
