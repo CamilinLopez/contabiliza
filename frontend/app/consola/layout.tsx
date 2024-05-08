@@ -7,7 +7,7 @@ export default function LayoutConsola({ children }: { children: ReactNode }) {
     <div className="">
       <Navconsola />
       <div className="bg-[#f2f2f2] h-screen">
-        <div>
+        <div className='flex' >
           <Bar />
           {children}
         </div>
