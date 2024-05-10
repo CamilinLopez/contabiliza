@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         ember: ['"Amazon Ember"', 'sans-serif'],
+        courgette: ['Courgette', 'sans-serif'],
       },
       colors: {
         'custom-azul': {
@@ -19,7 +20,7 @@ const config: Config = {
         },
         'custom-naranja': '#ff9900',
         'custom-negro': { '1': '#000716', '2': '#16191f' },
-        'custom-blanco': '#ffffff',
+        'custom-blanco': { '1': '#ffffff', '2': '#fafafa' },
         'custom-gris': { '1': '#dddddd', '2': '#545b64' },
         'custom-naranja-darck': '#cc7a00',
       },

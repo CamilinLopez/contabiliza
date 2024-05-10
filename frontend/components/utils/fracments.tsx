@@ -10,7 +10,7 @@ export function Icon({ styles }: { styles: string }) {
 }
 
 export const ParrowDown = ({ text, styles }: { text: string; styles: string }) => (
-  <div className="flex items-center gap-x-[2px] text-custom-gris hover:text-custom-naranja cursor-pointer">
+  <div className="flex items-center gap-x-[2px] text-custom-gris-1 hover:text-custom-naranja cursor-pointer">
     <p className={`${styles}`}>{text}</p>
     <svg
       xmlns="http://www.w3.org/2000/svg"

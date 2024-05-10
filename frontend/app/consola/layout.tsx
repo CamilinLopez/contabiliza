@@ -4,13 +4,15 @@ import Bar from '@/components/consola/Bar';
 
 export default function LayoutConsola({ children }: { children: ReactNode }) {
   return (
-    <div className="">
-      <Navconsola />
-      <div className="bg-[#f2f2f2] h-screen">
-        <div className='flex' >
+    <div className="flex flex-col">
+      <div className="sticky top-0 z-10">
+        <Navconsola />
+      </div>
+      <div className="bg-[#f2f2f2] h-screen flex overflow-auto scrollbar-hide">
+        <div className="sticky top-0">
           <Bar />
-          {children}
         </div>
+        <div className="flex-grow">{children}</div>
       </div>
     </div>
   );

@@ -22,7 +22,9 @@ const PrintText = () => {
   return (
     <div className="flex gap-x-9 justify-between items-center cursor-pointer text-custom-gris">
       {listOptions.map((text) => (
-        <p key={text} className="whitespace-nowrap font-ember font-[500] text-custom-size3 hover:text-custom-naranja">
+        <p
+          key={text}
+          className="whitespace-nowrap font-ember font-[500] text-custom-gris-1 text-custom-size3 hover:text-custom-naranja">
           {text}
         </p>
       ))}
@@ -80,7 +82,9 @@ export default function Navigation() {
               </Link>
             </div>
             <div className="flex items-center gap-x-5 w-auto">
-              <Link href={'/'} className="font-ember font-bold text-custom-gris text-[13px] hover:text-custom-naranja">
+              <Link
+                href={'/'}
+                className="font-ember font-bold text-custom-gris-1 text-[13px] hover:text-custom-naranja">
                 Contacte con nosotros
               </Link>
               <ParrowDown text="Soporte" styles="font-ember font-[600] text-[13px]" />

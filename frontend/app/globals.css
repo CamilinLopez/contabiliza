@@ -17,6 +17,13 @@
 }
 
 @font-face {
+  font-family: 'Courgette';
+  src: url('/fonts/OFL/Courgette-Regular.ttf') format('truetype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Amazon Ember';
   src: url('/fonts/Ember/Amazon-Ember-Medium.ttf') format('truetype');
   font-weight: 500; /* Medium */
@@ -104,12 +111,16 @@
   fill: currentColor;
 }
 
+/* Oculta la barra de desplazamiento */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 
 
 body {
   color: #000000;
   background: #ffffff;
-  font-family: 'Amazon Ember', sans-serif;
+  font-family: 'Courgette', 'Amazon Ember', sans-serif;
 }
 
 input#togglePlan:checked ~ .dot {

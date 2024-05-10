@@ -5,7 +5,7 @@ import { Buttons, ParrowDown } from './fragments';
 
 export default function Navconsola() {
   return (
-    <div className="bg-custom-azul-1 w-full">
+    <div className="bg-custom-azul-1  w-full">
       <div className="p-5 h-[40px] w-full flex items-center justify-between gap-x-3">
         <div className="flex md:w-9/12 xl:w-7/12 lg:w-9/12  h-full items-center gap-x-5">
           <div>

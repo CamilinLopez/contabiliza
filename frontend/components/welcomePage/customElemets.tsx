@@ -59,7 +59,7 @@ export const MagnificButton: FC<CustomButtonProps> = ({
       viewBox="0 0 24 24"
       strokeWidth={2.5}
       stroke="currentColor"
-      className="w-5 h-5 text-custom-gris hover:text-custom-naranja"
+      className="w-5 h-5 text-custom-gris-1 hover:text-custom-naranja"
     >
       <path
         strokeLinecap="round"
