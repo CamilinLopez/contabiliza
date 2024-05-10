@@ -50,7 +50,7 @@ export default function Navconsola() {
           <ParrowDown text="Cuenta" styles="font-ember font-medium text-[12px]" />
         </div>
       </div>
-      <div className="h-[30px] p-5 flex items-center">
+      <div className="h-[30px] px-4 flex items-center">
         <div className="">
           <p className="font-ember text-[12px] font-semibold text-white hover:border-[1px] border-[#879596]">
             PROYECTO 1
