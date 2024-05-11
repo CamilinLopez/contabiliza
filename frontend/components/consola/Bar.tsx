@@ -17,12 +17,13 @@ export default function Bar() {
 
   return (
     <div
+      id="leftBar"
       className={`bg-white ${
         expande ? 'w-[250px] transition-all duration-500 ease-in-out' : 'w-[40px] hover:bg-slate-100'
-      } h-full border-r-[2px] border-gray-300`}>
+      } h-screen border-r-[2px] border-gray-300`}>
       <div className="w-full">
         {!expande ? (
-          <div className="flex justify-center p-3 h-full">
+          <div className="flex justify-center p-3">
             <button onClick={() => open()}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                 <path

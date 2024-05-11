@@ -52,6 +52,9 @@ const config: Config = {
       boxShadow: {
         'thin-black': '0px 1px 1px 0px rgba(0, 0, 0, 0.3)',
       },
+      height: {
+        'h-bar': 'calc(100vh - 70px)',
+      },
     },
   },
   plugins: [

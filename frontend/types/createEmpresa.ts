@@ -4,8 +4,13 @@ export interface InputData {
   placeholder: string;
   name: string;
 }
+type DataType = string[];
+
+interface FormProps {
+  data: DataType;
+}
 
 export interface CompanyDataProps {
-  componente: React.ComponentType;
   title: string;
+  data: InputData[];
 }

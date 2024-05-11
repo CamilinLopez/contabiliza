@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CompanyDataProps } from '@/types/createEmpresa';
+import { Form } from '@/components/consola/formularios/formularioEmpresa';
 
 export const MainTitle = () => (
   <div className="flex flex-col gap-y-1">
@@ -13,7 +14,7 @@ export const MainTitle = () => (
   </div>
 );
 
-export const CompanyData: React.FC<CompanyDataProps> = ({ componente: Component, title }) => {
+export const CompanyData: React.FC<CompanyDataProps> = ({ title, data }) => {
   const [hidden, setHidden] = useState<boolean>(false);
 
   return (
@@ -50,7 +51,7 @@ export const CompanyData: React.FC<CompanyDataProps> = ({ componente: Component,
         </div>
       </div>
       <div className={`bg-white p-5 w-full ${hidden && 'hidden'} `}>
-        <Component />
+        <Form infoEmpresa={data} />
       </div>
     </div>
   );
