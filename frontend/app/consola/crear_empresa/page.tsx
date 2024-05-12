@@ -1,6 +1,11 @@
 import React from 'react';
 import { CompanyData, MainTitle } from './fracments';
-import { infoEmpresa, infoContador } from '@/components/consola/formularios/objetsData';
+import {
+  infoEmpresa,
+  infoContador,
+  infoUsuarioSistema,
+  infoPeriodoContable,
+} from '@/components/consola/formularios/objetsData';
 
 export default function CrearEmpresa() {
   return (
@@ -9,6 +14,8 @@ export default function CrearEmpresa() {
         <MainTitle />
         <CompanyData title="Datos de la empresa" data={infoEmpresa} />
         <CompanyData title="Datos del contador" data={infoContador} />
+        <CompanyData title="Usuario del sistema" data={infoUsuarioSistema} />
+        <CompanyData title="Periodo contable" data={infoPeriodoContable} />
       </div>
     </div>
   );

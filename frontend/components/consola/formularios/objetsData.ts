@@ -92,3 +92,10 @@ export const infoUsuarioSistema: InputData[] = [
     textp: 'RUT',
   },
 ];
+
+export const infoPeriodoContable = [
+  {
+    id: '14896256d',
+    text: 'al',
+  },
+];

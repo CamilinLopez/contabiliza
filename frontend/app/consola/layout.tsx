@@ -12,7 +12,7 @@ export default function LayoutConsola({ children }: { children: ReactNode }) {
         <div className="sticky top-0 h-full">
           <Bar />
         </div>
-        <div className="h-auto">{children}</div>
+        <div>{children}</div>
       </div>
     </div>
   );

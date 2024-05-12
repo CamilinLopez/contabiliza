@@ -4,13 +4,15 @@ export interface InputData {
   placeholder: string;
   name: string;
 }
-type DataType = string[];
 
-interface FormProps {
-  data: DataType;
+export interface PeriodoContable {
+  id: string;
+  text: string;
 }
+
+export type Options = InputData[] | PeriodoContable[];
 
 export interface CompanyDataProps {
   title: string;
-  data: InputData[];
+  data: Options;
 }
