@@ -5,6 +5,7 @@ import {
   infoContador,
   infoUsuarioSistema,
   infoPeriodoContable,
+  infoRegimenTributario,
 } from '@/components/consola/formularios/objetsData';
 
 export default function CrearEmpresa() {
@@ -16,6 +17,7 @@ export default function CrearEmpresa() {
         <CompanyData title="Datos del contador" data={infoContador} />
         <CompanyData title="Usuario del sistema" data={infoUsuarioSistema} />
         <CompanyData title="Periodo contable" data={infoPeriodoContable} />
+        <CompanyData title="Regimen tributario" data={infoRegimenTributario} />
       </div>
     </div>
   );

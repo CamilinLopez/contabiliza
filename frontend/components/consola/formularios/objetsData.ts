@@ -1,4 +1,4 @@
-import { InputData } from '@/types/createEmpresa';
+import { InputData, PeriodoContable, RegimenTributario } from '@/types/createEmpresa';
 
 export const infoEmpresa: InputData[] = [
   {
@@ -93,9 +93,19 @@ export const infoUsuarioSistema: InputData[] = [
   },
 ];
 
-export const infoPeriodoContable = [
+export const infoPeriodoContable: PeriodoContable[] = [
   {
     id: '14896256d',
     text: 'al',
   },
 ];
+
+export const infoRegimenTributario: RegimenTributario = {
+  id: 'flñprtma5',
+  contabilidad_completa: false,
+  regimen_fiscal: {
+    Regimen14asemiintegrado: false,
+    Regimenpropyme14dn3: false,
+    Regimepropyme14dn8: false,
+  },
+};
