@@ -60,7 +60,7 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable[] }) => {
 const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
   const [opr, setOpt] = useState({
     regimen_fiscal: false,
-    contavilidad_completa: false,
+    contavilidad_completa: true,
   });
   const [selectedOption, setSelectedOption] = useState<string>('');
 
@@ -78,28 +78,49 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
     setSelectedOption(value); // Actualiza el valor seleccionado
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [selectedCurrency, setSelectedCurrency] = useState<string>(''); // Moneda seleccionada
+
+  const currencies = ['USD', 'COP', 'EUR']; // Opciones de monedas
+
+  const handleToggleMenu = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsMenuOpen(!isMenuOpen); // Cambia el estado de si el menú está abierto o cerrado
+  };
+
+  const handleSelectCurrency = (currency: string) => {
+    setSelectedCurrency(currency);
+    setIsMenuOpen(false); // Cierra el menú cuando se selecciona una opción
+  };
+
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex gap-x-7">
         <button
           onClick={handleClick1}
-          className={`flex items-center gap-x-3 border-[1px] border-custom-gris-2 w-[260px] h-[62px] px-4 ${
-            opr.regimen_fiscal && 'border-custom-azul-3 bg-[#f1faff]'
+          className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
+            opr.regimen_fiscal ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
           }`}>
-          <input type="radio" className="cursor-pointer" name="regimen_fiscal" checked={opr.regimen_fiscal} />
-          <label className="font-ember font-normal text-[14px] cursor-pointer">Regiman fiscal</label>
+          <input
+            type="radio"
+            className="cursor-pointer"
+            name="regimen_fiscal"
+            checked={opr.regimen_fiscal}
+            onChange={() => {}}
+          />
+          <label className="font-ember font-normal text-[14px] cursor-pointer">Regimen fiscal</label>
         </button>
         <button
           onClick={handleClick2}
           name="contavilidad_completa"
-          className={`flex items-center gap-x-3 border-[1px] border-custom-gris-2 w-[260px] h-[62px] px-4 ${
-            opr.contavilidad_completa && 'border-custom-azul-3 bg-[#f1faff]'
+          className={`flex items-center gap-x-3 border-[1px] w-[260px] h-[62px] px-4 ${
+            opr.contavilidad_completa ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
           }`}>
-          <input type="radio" className="cursor-pointer" checked={opr.contavilidad_completa} />
+          <input type="radio" className="cursor-pointer" checked={opr.contavilidad_completa} onChange={() => {}} />
           <label className="font-ember font-normal text-[14px] cursor-pointer">Contabilidad completa</label>
         </button>
       </div>
-      <div className={`${opr.regimen_fiscal ? 'flex flex-col gap-y-3' : 'hidden'}`}>
+      <div className={`${opr.regimen_fiscal ? 'flex flex-col gap-y-1' : 'hidden'}`}>
         <div className="flex items-center gap-x-3">
           <input
             type="checkbox"
@@ -126,6 +147,54 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
             onChange={() => handleCheckboxChange('Regimen Pro Pyme 14 DN°8')}
           />
           <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">Regimen Pro Pyme 14 DN°8</label>
+        </div>
+      </div>
+      <div className="flex gap-x-8 items-end">
+        <div className="flex flex-col gap-y-1">
+          <div className="flex gap-x-3">
+            <input type="checkbox" className="cursor-pointer" />
+            <label className="font-ember font-normal text-[14px] text-custom-negro-1">Crear libro de caja</label>
+          </div>
+          <div className="flex gap-x-3">
+            <input type="checkbox" className="cursor-pointer" />
+            <label className="font-ember font-normal text-[14px] text-custom-negro-1">
+              Libro de ingresos y egresos
+            </label>
+          </div>
+        </div>
+        <div className="flex gap-x-3 items-end">
+          <label className="font-ember font-normal text-[14px] text-custom-negro-1">Monto apertura libro caja</label>
+          <input type="number" name="" id="" className="h-[25px] w-[100px] border-[1px] border-custom-gris-2" />
+          <div>
+            <div className="relative">
+              <button
+                onClick={handleToggleMenu}
+                className="font-ember font-normal text-[14px] h-[25px] flex items-center gap-x-1">
+                {selectedCurrency || 'USD'}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-3 h-3 text-current">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              {isMenuOpen && (
+                <ul className="absolute top-full left-55 bg-white border border-gray-400">
+                  {currencies.map((currency) => (
+                    <li
+                      key={currency}
+                      onClick={() => handleSelectCurrency(currency)}
+                      className="px-1 py-1 cursor-pointer hover:bg-gray-100 font-ember font-normal text-[14px]">
+                      {currency}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
