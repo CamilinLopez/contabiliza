@@ -1,14 +1,19 @@
 'use client';
 
-import { InputData, Options, PeriodoContable, RegimenTributario } from '@/types/createEmpresa';
+import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
 import { useState } from 'react';
 
-const FormInput = ({ data }: { data: InputData[] }) => {
+const FormCrearempresa = ({ data }: { data: CrearEmpresa[] }) => {
   return (
     <div className="flex flex-col gap-y-7">
+      <p className="font-ember font-normal text-[14px] text-custom-gris-2">
+        Como contador, administra múltiples empresas en nuestra app. Registra datos esenciales como nombre, RUT y
+        dirección para cada perfil empresarial. Accede a todas las herramientas contables necesarias desde una sola
+        plataforma centralizada.
+      </p>
       {data.map((info) => (
         <div key={info.id}>
-          <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.textp}</p>
+          <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.text}</p>
 
           {info.id !== '15974653k' ? (
             <input
@@ -31,126 +36,167 @@ const FormInput = ({ data }: { data: InputData[] }) => {
   );
 };
 
-const FormPeriodoContable = ({ data }: { data: PeriodoContable[] }) => {
+const FormDatosContador = ({ data }: { data: CrearEmpresa[] }) => {
   return (
-    <div className="w-full">
-      {data.map((item) => (
-        <div key={item.id} className="flex justify-between items-center">
-          <div className="w-5/12">
-            <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de inicio</p>
+    <div className="flex flex-col gap-y-7">
+      {data.map((info) => (
+        <div key={info.id}>
+          <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.text}</p>
+
+          {info.id !== '15974653k' ? (
+            <input
+              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              type="text"
+              placeholder={info.placeholder}
+              name={info.name}
+            />
+          ) : (
             <input
               type="date"
-              className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              placeholder={info.placeholder}
+              name={info.name}
             />
-          </div>
-          <p className="font-ember font-normal text-[14px] text-custom-negro-2">{item.text}</p>
-          <div className="w-5/12">
-            <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de finalización</p>
-            <input
-              type="date"
-              className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
-            />
-          </div>
+          )}
         </div>
       ))}
     </div>
   );
 };
 
+const FormUsuarioSistema = ({ data }: { data: CrearEmpresa[] }) => {
+  return (
+    <div className="flex flex-col gap-y-7">
+      {data.map((info) => (
+        <div key={info.id}>
+          <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.text}</p>
+
+          {info.id !== '15974653k' ? (
+            <input
+              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              type="text"
+              placeholder={info.placeholder}
+              name={info.name}
+            />
+          ) : (
+            <input
+              type="date"
+              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              placeholder={info.placeholder}
+              name={info.name}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
+  return (
+    <div className="w-full flex flex-col gap-y-4">
+      <p className="font-ember font-normal text-[14px] text-custom-gris-2">
+        Define el periodo contable indicando la fecha de inicio y fin de tus registros financieros. Desde la apertura
+        hasta el cierre del periodo, mantén un seguimiento preciso de tus transacciones empresariales.
+      </p>
+      <div key={data.id} className="flex justify-between items-center">
+        <div className="w-5/12">
+          <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de inicio</p>
+          <input
+            type="date"
+            className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+          />
+        </div>
+        <p className="font-ember font-normal text-[14px] text-custom-negro-2">{data.text}</p>
+        <div className="w-5/12">
+          <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de finalización</p>
+          <input
+            type="date"
+            className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
-  const [opr, setOpt] = useState({
+  const [checked, setChecked] = useState<{ regimen_fiscal: boolean; contavilidad_completa: boolean }>({
     regimen_fiscal: false,
     contavilidad_completa: true,
   });
   const [selectedOption, setSelectedOption] = useState<string>('');
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('');
 
-  const handleClick1 = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setOpt({ ...opr, ['regimen_fiscal']: !opr.regimen_fiscal, ['contavilidad_completa']: false });
-  };
 
-  const handleClick2 = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setOpt({ ...opr, ['contavilidad_completa']: !opr.contavilidad_completa, ['regimen_fiscal']: false });
+    if (e.currentTarget.name === 'regimen_fiscal')
+      setChecked({
+        ...checked,
+        ['regimen_fiscal']: !checked.regimen_fiscal,
+        ['contavilidad_completa']: (checked.contavilidad_completa = false),
+      });
+    if (e.currentTarget.name === 'contabilidad_completa')
+      setChecked({
+        ...checked,
+        ['contavilidad_completa']: !checked.contavilidad_completa,
+        ['regimen_fiscal']: (checked.regimen_fiscal = false),
+      });
   };
 
   const handleCheckboxChange = (value: string) => {
-    setSelectedOption(value); // Actualiza el valor seleccionado
+    setSelectedOption(value);
   };
-
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>(''); // Moneda seleccionada
-
-  const currencies = ['USD', 'COP', 'EUR']; // Opciones de monedas
-
-  const handleToggleMenu = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsMenuOpen(!isMenuOpen); // Cambia el estado de si el menú está abierto o cerrado
-  };
+  const currencies = ['USD', 'COP', 'EUR'];
 
   const handleSelectCurrency = (currency: string) => {
     setSelectedCurrency(currency);
     setIsMenuOpen(false); // Cierra el menú cuando se selecciona una opción
   };
-
   return (
     <div className="flex flex-col gap-y-4">
+      <p className="font-ember font-normal text-[14px] text-custom-gris-2">
+        Configura el régimen tributario de tu empresa según sus necesidades específicas. Elige entre opciones como
+        Contabilidad Completa o Regímenes Propyme, y especifica si deseas llevar un libro de caja o ingresos y egresos.
+        Además, establece el monto de apertura de caja para un inicio preciso en tus registros financieros.
+      </p>
       <div className="flex gap-x-7">
         <button
-          onClick={handleClick1}
+          name="regimen_fiscal"
+          onClick={handleClick}
           className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
-            opr.regimen_fiscal ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
+            checked.regimen_fiscal ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
           }`}>
-          <input
-            type="radio"
-            className="cursor-pointer"
-            name="regimen_fiscal"
-            checked={opr.regimen_fiscal}
-            onChange={() => {}}
-          />
+          <input type="radio" checked={checked.regimen_fiscal} readOnly className="mr-2" />
           <label className="font-ember font-normal text-[14px] cursor-pointer">Regimen fiscal</label>
         </button>
         <button
-          onClick={handleClick2}
-          name="contavilidad_completa"
-          className={`flex items-center gap-x-3 border-[1px] w-[260px] h-[62px] px-4 ${
-            opr.contavilidad_completa ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
+          name="contabilidad_completa"
+          onClick={handleClick}
+          className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
+            checked.contavilidad_completa ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
           }`}>
-          <input type="radio" className="cursor-pointer" checked={opr.contavilidad_completa} onChange={() => {}} />
+          <input type="radio" checked={checked.contavilidad_completa} readOnly className="mr-2" />
           <label className="font-ember font-normal text-[14px] cursor-pointer">Contabilidad completa</label>
         </button>
       </div>
-      <div className={`${opr.regimen_fiscal ? 'flex flex-col gap-y-1' : 'hidden'}`}>
-        <div className="flex items-center gap-x-3">
-          <input
-            type="checkbox"
-            name={'Regimen 14 A semi integrado'}
-            checked={selectedOption === 'Regimen 14 A semi integrado'}
-            onChange={() => handleCheckboxChange('Regimen 14 A semi integrado')}
-          />
-          <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">Regimen 14 A semi integrado</label>
-        </div>
-        <div className="flex items-center gap-x-3">
-          <input
-            type="checkbox"
-            name="Regimen Pro Pyme 14 DN°3"
-            checked={selectedOption === 'Regimen Pro Pyme 14 DN°3'}
-            onChange={() => handleCheckboxChange('Regimen Pro Pyme 14 DN°3')}
-          />
-          <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">Regimen Pro Pyme 14 DN°3</label>
-        </div>
-        <div className="flex items-center gap-x-3">
-          <input
-            type="checkbox"
-            name="Regimen Pro Pyme 14 DN°8"
-            checked={selectedOption === 'Regimen Pro Pyme 14 DN°8'}
-            onChange={() => handleCheckboxChange('Regimen Pro Pyme 14 DN°8')}
-          />
-          <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">Regimen Pro Pyme 14 DN°8</label>
-        </div>
+      <div className={`${checked.regimen_fiscal ? 'flex flex-col gap-y-1' : 'hidden'}`}>
+        {data.regimen1.options.map((item) => (
+          <div key={item.id} className="flex items-center gap-x-3">
+            <input
+              type="checkbox"
+              name={item.name}
+              checked={selectedOption === item.name}
+              onChange={() => handleCheckboxChange(item.name)}
+            />
+            <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">{item.name}</label>
+          </div>
+        ))}
       </div>
-      <div className="flex gap-x-8 items-end">
-        <div className="flex flex-col gap-y-1">
+      <div className="flex items-end gap-x-8">
+        <div>
           <div className="flex gap-x-3">
             <input type="checkbox" className="cursor-pointer" />
             <label className="font-ember font-normal text-[14px] text-custom-negro-1">Crear libro de caja</label>
@@ -162,38 +208,39 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
             </label>
           </div>
         </div>
-        <div className="flex gap-x-3 items-end">
+        <div className="flex items-end gap-x-3">
           <label className="font-ember font-normal text-[14px] text-custom-negro-1">Monto apertura libro caja</label>
           <input type="number" name="" id="" className="h-[25px] w-[100px] border-[1px] border-custom-gris-2" />
-          <div>
-            <div className="relative">
-              <button
-                onClick={handleToggleMenu}
-                className="font-ember font-normal text-[14px] h-[25px] flex items-center gap-x-1">
-                {selectedCurrency || 'USD'}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-3 h-3 text-current">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-              </button>
-              {isMenuOpen && (
-                <ul className="absolute top-full left-55 bg-white border border-gray-400">
-                  {currencies.map((currency) => (
-                    <li
-                      key={currency}
-                      onClick={() => handleSelectCurrency(currency)}
-                      className="px-1 py-1 cursor-pointer hover:bg-gray-100 font-ember font-normal text-[14px]">
-                      {currency}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMenuOpen(!isMenuOpen);
+              }}
+              className="font-ember font-normal text-[14px] h-[25px] flex items-center gap-x-1">
+              {selectedCurrency || 'USD'}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-3 h-3 text-current">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            {isMenuOpen && (
+              <ul className="absolute top-full left-55 bg-white border border-gray-400">
+                {currencies.map((currency) => (
+                  <li
+                    key={currency}
+                    onClick={() => handleSelectCurrency(currency)}
+                    className="px-1 py-1 cursor-pointer hover:bg-gray-100 font-ember font-normal text-[14px]">
+                    {currency}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </div>
@@ -202,33 +249,24 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
 };
 
 export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
-  const arraysIguales = ({ a, b }: { a: any; b: any }) => {
-    return a.sort().toString() === b.sort().toString();
-  };
-  let option1, option2, option3;
-
-  if (Array.isArray(infoEmpresa)) {
-    option1 = arraysIguales({
-      a: Object.keys(infoEmpresa[0]).sort(),
-      b: ['id', 'textp', 'placeholder', 'name'].sort(),
-    });
-
-    option2 = arraysIguales({
-      a: Object.keys(infoEmpresa[0]).sort(),
-      b: ['id', 'text'].sort(),
-    });
-  }
-  option3 = arraysIguales({
-    a: Object.keys(infoEmpresa).sort(),
-    b: ['id', 'regimen_fiscal', 'contabilidad_completa'].sort(),
-  });
-
   return (
     <div>
       <form className="flex flex-col gap-y-8" action="">
-        {option1 && <FormInput data={infoEmpresa as InputData[]} />}
-        {option2 && <FormPeriodoContable data={infoEmpresa as PeriodoContable[]} />}
-        {option3 && <FormRegimenTributario data={infoEmpresa as RegimenTributario} />}
+        {infoEmpresa.section === 'crear_empresa' && (
+          <FormCrearempresa data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
+        )}
+        {infoEmpresa.section === 'datos_contador' && (
+          <FormDatosContador data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
+        )}
+        {infoEmpresa.section === 'usuario_del_sistema' && (
+          <FormUsuarioSistema data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
+        )}
+        {infoEmpresa.section === 'periodo_contable' && (
+          <FormPeriodoContable data={infoEmpresa.infoEmpresa as PeriodoContable} />
+        )}
+        {infoEmpresa.section === 'regimen_tributario' && (
+          <FormRegimenTributario data={infoEmpresa.infoEmpresa as RegimenTributario} />
+        )}
       </form>
     </div>
   );
