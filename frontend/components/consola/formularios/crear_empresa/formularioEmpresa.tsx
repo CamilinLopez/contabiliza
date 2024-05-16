@@ -116,7 +116,7 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
         <div className="w-5/12">
           <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de inicio</p>
           <input
-            type="date"
+            type="month"
             className="text-custom-gris-2 w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
           />
         </div>
@@ -124,7 +124,7 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
         <div className="w-5/12">
           <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de finalización</p>
           <input
-            type="date"
+            type="month"
             className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette text-custom-gris-2 pl-2"
           />
         </div>
