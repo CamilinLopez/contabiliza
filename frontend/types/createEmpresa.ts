@@ -1,10 +1,3 @@
-export interface InputData {
-  id: string;
-  textp: string;
-  placeholder: string;
-  name: string;
-}
-
 export interface CrearEmpresa {
   id: string;
   text: string;
@@ -17,11 +10,14 @@ export interface PeriodoContable {
   text: string;
 }
 
+export interface Optionsfiscal {
+  id: string;
+  name: string;
+}
+
 export interface Regimenfiscal {
   regimen1: string;
-  option1: string;
-  option2: string;
-  option3: string;
+  options: Optionsfiscal[];
 }
 
 export interface RegimenTributario {
@@ -33,12 +29,6 @@ export interface RegimenTributario {
 export interface TypeCrearempresa {
   section: string;
   infoEmpresa: CrearEmpresa[] | PeriodoContable | RegimenTributario;
-}
-
-export interface OpcionesTributarios {
-  Regimen14asemiintegrado: boolean;
-  Regimenpropyme14dn3: boolean;
-  Regimepropyme14dn8: boolean;
 }
 
 export type Options = TypeCrearempresa;

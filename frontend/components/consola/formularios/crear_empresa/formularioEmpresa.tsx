@@ -25,7 +25,7 @@ const FormCrearempresa = ({ data }: { data: CrearEmpresa[] }) => {
           ) : (
             <input
               type="date"
-              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              className="text-custom-gris-2 w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
               placeholder={info.placeholder}
               name={info.name}
             />
@@ -67,27 +67,40 @@ const FormDatosContador = ({ data }: { data: CrearEmpresa[] }) => {
 const FormUsuarioSistema = ({ data }: { data: CrearEmpresa[] }) => {
   return (
     <div className="flex flex-col gap-y-7">
-      {data.map((info) => (
-        <div key={info.id}>
-          <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.text}</p>
+      <p className="font-ember font-normal text-[14px] text-custom-gris-2">
+        Empodera a tu equipo agregando múltiples usuarios para administrar la empresa. Crea perfiles con nombres y RUTs
+        individuales, permitiendo una gestión colaborativa eficiente dentro de la plataforma.
+      </p>
+      <div className="flex flex-col gap-y-7">
+        {data.map((info) => (
+          <div key={info.id}>
+            <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.text}</p>
 
-          {info.id !== '15974653k' ? (
-            <input
-              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
-              type="text"
-              placeholder={info.placeholder}
-              name={info.name}
-            />
-          ) : (
-            <input
-              type="date"
-              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
-              placeholder={info.placeholder}
-              name={info.name}
-            />
-          )}
-        </div>
-      ))}
+            {info.id !== '15974653k' ? (
+              <input
+                className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+                type="text"
+                placeholder={info.placeholder}
+                name={info.name}
+              />
+            ) : (
+              <input
+                type="date"
+                className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+                placeholder={info.placeholder}
+                name={info.name}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="flex items-start">
+        <button
+          onClick={(e) => e.preventDefault()}
+          className="border-[1px] border-custom-gris-2 px-[20px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
+          Agrega un nuevo usuario
+        </button>
+      </div>
     </div>
   );
 };
@@ -104,7 +117,7 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
           <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de inicio</p>
           <input
             type="date"
-            className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+            className="text-custom-gris-2 w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
           />
         </div>
         <p className="font-ember font-normal text-[14px] text-custom-negro-2">{data.text}</p>
@@ -112,7 +125,7 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
           <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de finalización</p>
           <input
             type="date"
-            className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+            className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette text-custom-gris-2 pl-2"
           />
         </div>
       </div>

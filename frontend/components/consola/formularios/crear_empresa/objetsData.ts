@@ -125,12 +125,3 @@ export const regimenTributario: TypeCrearempresa = {
     },
   },
 };
-// export const infoRegimenTributario: RegimenTributario = {
-//   id: 'flñprtma5',
-//   contabilidad_completa: false,
-//   regimen_fiscal: {
-//     Regimen14asemiintegrado: false,
-//     Regimenpropyme14dn3: false,
-//     Regimepropyme14dn8: false,
-//   },
-// };

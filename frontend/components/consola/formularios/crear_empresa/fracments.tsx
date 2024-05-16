@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CompanyDataProps } from '@/types/createEmpresa';
-import { Form } from '@/components/consola/formularios/formularioEmpresa';
+import { Form } from '@/components/consola/formularios/crear_empresa/formularioEmpresa';
 
 export const MainTitle = () => (
   <div className="flex flex-col gap-y-1">

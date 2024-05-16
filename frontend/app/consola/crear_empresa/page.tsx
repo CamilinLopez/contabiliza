@@ -1,12 +1,12 @@
 import React from 'react';
-import { CompanyData, MainTitle } from './fracments';
+import { CompanyData, MainTitle } from '../../../components/consola/formularios/crear_empresa/fracments';
 import {
   crearEmpresa,
   datosContador,
   usuarioSistema,
   periodoContable,
   regimenTributario,
-} from '@/components/consola/formularios/objetsData';
+} from '@/components/consola/formularios/crear_empresa/objetsData';
 
 export default function CrearEmpresa() {
   return (

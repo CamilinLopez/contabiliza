@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { Icon } from '../utils/fracments';
+import { Icon } from '@/components/utils/fracments';
 import { Buttons, ParrowDown } from './fragments';
 
 export default function Navconsola() {
