@@ -15,9 +15,9 @@ export default function CrearEmpresa() {
         <MainTitle />
         <CompanyData title="Datos de la empresa" data={crearEmpresa} />
         <CompanyData title="Datos del contador" data={datosContador} />
-        <CompanyData title="Usuario del sistema" data={usuarioSistema} />
+        <CompanyData title="Usuarios del sistema - opcional" data={usuarioSistema} />
         <CompanyData title="Periodo contable" data={periodoContable} />
-        <CompanyData title="Regimen tributario" data={regimenTributario} />
+        <CompanyData title="Régimen tributario" data={regimenTributario} />
       </div>
     </div>
   );

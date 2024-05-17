@@ -8,8 +8,8 @@ export const MainTitle = () => (
   <div className="flex flex-col gap-y-1">
     <h1 className="font-ember font-normal text-[28px] text-custom-negro-2">Crear empresa</h1>
     <p className="font-ember font-medium text-[14px] text-custom-gris-2">
-      En Contaviliza, entendemos que el inicio de toda contabilidad es la creación de empresa. Simplificamos este
-      proceso y te acompañamos en cada paso hacia una gestión financiera exitosa.
+      En Contabiliza, entendemos que el inicio de toda contabilidad es la creación de empresa. Simplificamos este. Proceso
+      y te acompañamos en cada paso hacia una gestión financiera exitosa.
     </p>
   </div>
 );

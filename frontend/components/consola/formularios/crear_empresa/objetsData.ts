@@ -1,4 +1,4 @@
-import { RegimenTributario, TypeCrearempresa } from '@/types/createEmpresa';
+import { TypeCrearempresa } from '@/types/createEmpresa';
 
 export const crearEmpresa: TypeCrearempresa = {
   section: 'crear_empresa',
@@ -24,25 +24,25 @@ export const crearEmpresa: TypeCrearempresa = {
     {
       id: '53697521p',
       text: 'Direccion',
-      placeholder: 'ejempplo, Calle yungay 6026',
+      placeholder: 'ejempplo, Calle del Horizonte Azul',
       name: 'direccion',
     },
     {
       id: '53697514l',
       text: 'Comuna',
-      placeholder: 'ejemplo, Peñalolen',
-      name: 'comina',
+      placeholder: 'ejemplo, Villamarina',
+      name: 'comuna',
     },
     {
       id: '57936475d',
       text: 'Representante legal',
-      placeholder: 'Brian Andres Ceballos Ramires',
+      placeholder: 'Lucía Elena Rodríguez Martínez',
       name: 'Representante legal',
     },
     {
       id: '12697536d',
       text: 'Rut representante',
-      placeholder: 'ejemplo, 17104120-1',
+      placeholder: 'ejemplo, 96358966-1',
       name: 'rut representante',
     },
     {
@@ -72,13 +72,13 @@ export const datosContador: TypeCrearempresa = {
     {
       id: 'ajwepgjs5',
       name: 'Nombre',
-      placeholder: 'ejemplo, Alfredo Harid Lavados Gonzales',
+      placeholder: 'ejemplo, Santiago Álvarez Pérez',
       text: 'Nombre',
     },
     {
       id: 'lprnbgaq6',
       name: 'RUT',
-      placeholder: 'ejemplo, 10521881-8',
+      placeholder: 'ejemplo, 33333333-8',
       text: 'RUT',
     },
   ],
@@ -89,15 +89,15 @@ export const usuarioSistema: TypeCrearempresa = {
   infoEmpresa: [
     {
       id: 'portjhad4',
-      name: 'Nombre',
-      placeholder: 'ejemplo, Danilo Arenas Lemus',
-      text: 'Nombre',
+      name: 'Correo',
+      placeholder: 'arturo@gmail.com',
+      text: 'Correo',
     },
     {
       id: 'prñamvge2',
-      name: 'RUT',
-      placeholder: 'ejemplo, 13030079-0',
-      text: 'RUT',
+      name: 'Nombre',
+      placeholder: 'ejemplo, Arturo',
+      text: 'Nombre',
     },
   ],
 };
@@ -113,15 +113,23 @@ export const periodoContable: TypeCrearempresa = {
 export const regimenTributario: TypeCrearempresa = {
   section: 'regimen_tributario',
   infoEmpresa: {
-    id: '14796547h',
-    regimen2: 'Contabilidad completa',
-    regimen1: {
-      regimen1: 'Regimen fiscal',
-      options: [
-        { id: '12598765g', name: 'Regimen 14A semi integrado' },
-        { id: '12598762f', name: 'Regimen Propyme 14DN°3' },
-        { id: 'loputanh9', name: 'Regimen Propyme 14DN°8' },
-      ],
+    typeContabilidad: {
+      type1: 'Contabilidad completa',
+      type2: 'Contabilidad simplificada',
     },
+    typeRegimenFiscal: [
+      {
+        id: '12597635d',
+        name: 'Régimen 14A semiintegrado',
+      },
+      {
+        id: '46698736ñ',
+        name: 'Régimen Propyme 14DN°3',
+      },
+      {
+        id: '785436985l',
+        name: 'Régimen Propyme 14DN°8',
+      },
+    ],
   },
 };

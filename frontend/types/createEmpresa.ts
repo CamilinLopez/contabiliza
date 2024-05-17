@@ -15,15 +15,14 @@ export interface Optionsfiscal {
   name: string;
 }
 
-export interface Regimenfiscal {
-  regimen1: string;
-  options: Optionsfiscal[];
+export interface ContabilidadTypes {
+  type1: string;
+  type2: string;
 }
 
 export interface RegimenTributario {
-  id: string;
-  regimen1: Regimenfiscal;
-  regimen2: string;
+  typeContabilidad: ContabilidadTypes;
+  typeRegimenFiscal: Optionsfiscal[];
 }
 
 export interface TypeCrearempresa {
