@@ -120,7 +120,7 @@ export const regimenTributario: TypeCrearempresa = {
     typeRegimenFiscal: [
       {
         id: '12597635d',
-        name: 'Régimen 14A semiintegrado',
+        name: 'Régimen 14A semi integrado',
       },
       {
         id: '46698736ñ',

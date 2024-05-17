@@ -236,12 +236,12 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
             <div>
               <div className="flex gap-x-3">
                 <input type="checkbox" className="cursor-pointer" />
-                <label className="font-ember font-normal text-[14px] text-custom-negro-1">Crear libro de caja.</label>
+                <label className="font-ember font-normal text-[14px] text-custom-negro-1">libro de caja.</label>
               </div>
               <div className="flex gap-x-3">
                 <input type="checkbox" className="cursor-pointer" />
                 <label className="font-ember font-normal text-[14px] text-custom-negro-1">
-                  Libro de ingresos y egresos.{' '}
+                  Libro de ingresos y egresos.
                 </label>
               </div>
             </div>
