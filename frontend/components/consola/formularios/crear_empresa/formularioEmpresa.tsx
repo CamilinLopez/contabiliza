@@ -1,9 +1,30 @@
 'use client';
 
 import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
+import { FormCrearEmpresatype } from '@/types/formCrearEmpresa';
 import { useState } from 'react';
 
-const FormCrearempresa = ({ data }: { data: CrearEmpresa[] }) => {
+const FormCrearempresa = ({
+  data,
+  setCrearEmpresa,
+  crearEmpresa,
+}: {
+  data: CrearEmpresa[];
+  setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+  crearEmpresa: FormCrearEmpresatype;
+}) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget) {
+      const { name, value } = e.currentTarget;
+      setCrearEmpresa((prevState) => ({
+        ...prevState,
+        section1: {
+          ...prevState.section1,
+          [name]: value,
+        },
+      }));
+    }
+  };
   return (
     <div className="flex flex-col gap-y-7">
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
@@ -21,13 +42,17 @@ const FormCrearempresa = ({ data }: { data: CrearEmpresa[] }) => {
               type="text"
               placeholder={info.placeholder}
               name={info.name}
+              value={crearEmpresa.section1[info.name as keyof typeof crearEmpresa.section1]}
+              onChange={handleOnChange}
             />
           ) : (
             <input
               type="date"
               className="text-custom-gris-2 w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
               placeholder={info.placeholder}
+              value={crearEmpresa.section1[info.name as keyof typeof crearEmpresa.section1]}
               name={info.name}
+              onChange={handleOnChange}
             />
           )}
         </div>
@@ -69,8 +94,8 @@ const FormUsuarioSistema = ({ data }: { data: CrearEmpresa[] }) => {
     <div className="flex flex-col gap-y-7">
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
         Agrega o invita a usuarios para colaborar en la gestión contable de tu empresa. Permite que otros trabajen en tu
-        cuenta, facilitando una administración eficiente y compartida de los registros financieros. <br /><br /> Se enviará un
-        correo electrónico a los usuarioa con las instrucciones de configuración de la contraseña.
+        cuenta, facilitando una administración eficiente y compartida de los registros financieros. <br />
+        <br /> Se enviará un correo electrónico a los usuarioa con las instrucciones de configuración de la contraseña.
       </p>
       <div className="flex flex-col gap-y-7">
         {data.map((info) => (
@@ -290,11 +315,50 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
 };
 
 export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
+  const [crearEmpresa, setCrearEmpresa] = useState<FormCrearEmpresatype>({
+    section1: {
+      Comuna: '',
+      Correo_electronico: '',
+      Dirección: '',
+      Empresa: '',
+      Giro: '',
+      Inicio_de_actividades: '',
+      Representante_legal: '',
+      RUT: '',
+      Rut_representante: '',
+      Tipo_Empresa: '',
+    },
+    section2: {
+      Nombre: '',
+      RUT: '',
+    },
+    section3: {
+      usuarios_del_sistema: [],
+    },
+    section4: {
+      fecha: 0,
+    },
+    section5: {
+      libro_caja: false,
+      libro_ingresos_egresos: false,
+      monto_apertura_libro_caja: {
+        moneda: '',
+        monto: 0,
+      },
+      opciones_regimen: '',
+      tipo_contabilidad: '',
+    },
+  });
+
   return (
     <div>
       <form className="flex flex-col gap-y-8" action="">
         {infoEmpresa.section === 'crear_empresa' && (
-          <FormCrearempresa data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
+          <FormCrearempresa
+            data={infoEmpresa.infoEmpresa as CrearEmpresa[]}
+            setCrearEmpresa={setCrearEmpresa}
+            crearEmpresa={crearEmpresa}
+          />
         )}
         {infoEmpresa.section === 'datos_contador' && (
           <FormDatosContador data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
