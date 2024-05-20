@@ -16,7 +16,7 @@ export interface datosContador {
   RUT: number | string;
 }
 
-interface dataUsuaruosSistema {
+export interface dataUsuaruosSistema {
   Correo: string;
   Nombre: string;
 }

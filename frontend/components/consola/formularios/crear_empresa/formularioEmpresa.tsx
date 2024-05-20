@@ -1,7 +1,7 @@
 'use client';
 
 import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
-import { FormCrearEmpresatype } from '@/types/formCrearEmpresa';
+import { FormCrearEmpresatype, dataUsuaruosSistema, usuariosSistema } from '@/types/formCrearEmpresa';
 import { useState } from 'react';
 
 const FormCrearempresa = ({
@@ -61,7 +61,27 @@ const FormCrearempresa = ({
   );
 };
 
-const FormDatosContador = ({ data }: { data: CrearEmpresa[] }) => {
+const FormDatosContador = ({
+  data,
+  setCrearEmpresa,
+  crearEmpresa,
+}: {
+  data: CrearEmpresa[];
+  setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+  crearEmpresa: FormCrearEmpresatype;
+}) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget) {
+      const { name, value } = e.currentTarget;
+      setCrearEmpresa((prevState) => ({
+        ...prevState,
+        section2: {
+          ...prevState.section2,
+          [name]: value,
+        },
+      }));
+    }
+  };
   return (
     <div className="flex flex-col gap-y-7">
       {data.map((info) => (
@@ -74,6 +94,8 @@ const FormDatosContador = ({ data }: { data: CrearEmpresa[] }) => {
               type="text"
               placeholder={info.placeholder}
               name={info.name}
+              value={crearEmpresa.section2[info.name as keyof typeof crearEmpresa.section2]}
+              onChange={handleOnChange}
             />
           ) : (
             <input
@@ -81,6 +103,8 @@ const FormDatosContador = ({ data }: { data: CrearEmpresa[] }) => {
               className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
               placeholder={info.placeholder}
               name={info.name}
+              value={crearEmpresa.section2[info.name as keyof typeof crearEmpresa.section2]}
+              onChange={handleOnChange}
             />
           )}
         </div>
@@ -89,7 +113,34 @@ const FormDatosContador = ({ data }: { data: CrearEmpresa[] }) => {
   );
 };
 
-const FormUsuarioSistema = ({ data }: { data: CrearEmpresa[] }) => {
+const FormUsuarioSistema = ({
+  data,
+  setCrearEmpresa,
+  crearEmpresa,
+}: {
+  data: CrearEmpresa[];
+  setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+  crearEmpresa: FormCrearEmpresatype;
+}) => {
+  const [usuariSistema, setUsuariSistema] = useState<dataUsuaruosSistema>({
+    Correo: '',
+    Nombre: '',
+  });
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsuariSistema({
+      ...usuariSistema,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
+  };
+  const addUsers = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section3: {
+        usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema, usuariSistema],
+      },
+    }));
+  };
   return (
     <div className="flex flex-col gap-y-7">
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
@@ -102,27 +153,20 @@ const FormUsuarioSistema = ({ data }: { data: CrearEmpresa[] }) => {
           <div key={info.id}>
             <p className="font-ember font-normal text-[14px] text-custom-negro-2">{info.text}</p>
 
-            {info.id !== '15974653k' ? (
-              <input
-                className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
-                type="text"
-                placeholder={info.placeholder}
-                name={info.name}
-              />
-            ) : (
-              <input
-                type="date"
-                className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
-                placeholder={info.placeholder}
-                name={info.name}
-              />
-            )}
+            <input
+              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              type="text"
+              placeholder={info.placeholder}
+              name={info.name}
+              value={usuariSistema[info.name as keyof dataUsuaruosSistema]}
+              onChange={handleOnChange}
+            />
           </div>
         ))}
       </div>
       <div className="flex items-start">
         <button
-          onClick={(e) => e.preventDefault()}
+          onClick={addUsers}
           className="border-[1px] border-custom-gris-2 px-[20px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
           Agrega un nuevo usuario
         </button>
@@ -349,7 +393,7 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
       tipo_contabilidad: '',
     },
   });
-
+  console.log(crearEmpresa);
   return (
     <div>
       <form className="flex flex-col gap-y-8" action="">
@@ -361,10 +405,18 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
           />
         )}
         {infoEmpresa.section === 'datos_contador' && (
-          <FormDatosContador data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
+          <FormDatosContador
+            data={infoEmpresa.infoEmpresa as CrearEmpresa[]}
+            setCrearEmpresa={setCrearEmpresa}
+            crearEmpresa={crearEmpresa}
+          />
         )}
         {infoEmpresa.section === 'usuario_del_sistema' && (
-          <FormUsuarioSistema data={infoEmpresa.infoEmpresa as CrearEmpresa[]} />
+          <FormUsuarioSistema
+            data={infoEmpresa.infoEmpresa as CrearEmpresa[]}
+            setCrearEmpresa={setCrearEmpresa}
+            crearEmpresa={crearEmpresa}
+          />
         )}
         {infoEmpresa.section === 'periodo_contable' && (
           <FormPeriodoContable data={infoEmpresa.infoEmpresa as PeriodoContable} />
