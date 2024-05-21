@@ -113,10 +113,19 @@ export const periodoContable: TypeCrearempresa = {
 export const regimenTributario: TypeCrearempresa = {
   section: 'regimen_tributario',
   infoEmpresa: {
-    typeContabilidad: {
-      type1: 'Contabilidad completa',
-      type2: 'Contabilidad simplificada',
-    },
+    typeContabilidad: [
+      {
+        id: 'pñkjsnbg9',
+        type: 'contabilidad_completa',
+        name: 'Contabilidad completa',
+      },
+      {
+        id: 'pñlrtyuw7',
+        type: 'contabilidad_simplificada',
+        name: 'Contabilidad simplificada',
+      },
+    ],
+
     typeRegimenFiscal: [
       {
         id: '12597635d',

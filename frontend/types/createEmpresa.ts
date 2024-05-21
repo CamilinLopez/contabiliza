@@ -13,15 +13,17 @@ export interface PeriodoContable {
 export interface Optionsfiscal {
   id: string;
   name: string;
+  type: string;
 }
 
 export interface ContabilidadTypes {
-  type1: string;
-  type2: string;
+  id: string;
+  type: string;
+  name: string;
 }
 
 export interface RegimenTributario {
-  typeContabilidad: ContabilidadTypes;
+  typeContabilidad: ContabilidadTypes[];
   typeRegimenFiscal: Optionsfiscal[];
 }
 

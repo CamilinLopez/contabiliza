@@ -1,8 +1,9 @@
 'use client';
 
-import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
-import { FormCrearEmpresatype, dataUsuaruosSistema, usuariosSistema } from '@/types/formCrearEmpresa';
+import { Options, PeriodoContable, RegimenTributario, CrearEmpresa, ContabilidadTypes } from '@/types/createEmpresa';
+import { FormCrearEmpresatype, accoutingOptions, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 const FormCrearempresa = ({
   data,
@@ -123,6 +124,7 @@ const FormUsuarioSistema = ({
   crearEmpresa: FormCrearEmpresatype;
 }) => {
   const [usuariSistema, setUsuariSistema] = useState<dataUsuaruosSistema>({
+    id: '',
     Correo: '',
     Nombre: '',
   });
@@ -134,10 +136,21 @@ const FormUsuarioSistema = ({
   };
   const addUsers = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const newUser = { ...usuariSistema, id: uuidv4() };
     setCrearEmpresa((prevState) => ({
       ...prevState,
       section3: {
-        usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema, usuariSistema],
+        usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema, newUser],
+      },
+    }));
+    setUsuariSistema({ id: '', Correo: '', Nombre: '' });
+  };
+  const deleteUesr = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    e.preventDefault();
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section3: {
+        usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema.filter((item) => item.id !== id)],
       },
     }));
   };
@@ -164,6 +177,19 @@ const FormUsuarioSistema = ({
           </div>
         ))}
       </div>
+      <div className="flex flex-col gap-y-2">
+        {crearEmpresa.section3.usuarios_del_sistema.map((item) => (
+          <div key={item.id} className="flex gap-x-5 items-center">
+            <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/3">{item.Nombre}</p>
+            <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/3">{item.Correo}</p>
+            <button
+              onClick={(e) => deleteUesr(e, item.id)}
+              className="w-1/5 border-[1px] border-custom-gris-2 px-[10px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
+              Eliminar usurario
+            </button>
+          </div>
+        ))}
+      </div>
       <div className="flex items-start">
         <button
           onClick={addUsers}
@@ -175,12 +201,26 @@ const FormUsuarioSistema = ({
   );
 };
 
-const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
+const FormPeriodoContable = ({
+  data,
+  setCrearEmpresa,
+}: {
+  data: PeriodoContable;
+  setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+}) => {
   const [year, setYear] = useState(new Date().getFullYear());
 
   const handleYearChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     const inputYear = parseInt(event.currentTarget.value);
-    setYear(inputYear);
+    if (!isNaN(inputYear)) {
+      setYear(inputYear);
+      setCrearEmpresa((prevState) => ({
+        ...prevState,
+        section4: {
+          fecha: inputYear,
+        },
+      }));
+    }
   };
 
   return (
@@ -188,24 +228,6 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
         Selecciona el año contable para visualizar tus registros financieros de forma precisa y organizada.
       </p>
-      {/* <div key={data.id} className="flex justify-between items-center">
-        <div className="w-5/12">
-          <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de inicio</p>
-          <input
-            type=""
-            className="text-custom-gris-2 w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
-          />
-        </div>
-        <p className="font-ember font-normal text-[14px] text-custom-negro-2">{data.text}</p>
-        <div className="w-5/12">
-          <p className="font-ember font-normal text-[14px] text-custom-negro-2">Fecha de finalización</p>
-          <input
-            type="month"
-            className="w-full h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette text-custom-gris-2 pl-2"
-          />
-        </div>
-      </div> */}
-
       <div>
         <input
           className="w-[180px] border-[1px] border-custom-gris-2"
@@ -222,9 +244,9 @@ const FormPeriodoContable = ({ data }: { data: PeriodoContable }) => {
 };
 
 const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
-  const [checked, setChecked] = useState<{ regimen_fiscal: boolean; contavilidad_completa: boolean }>({
-    regimen_fiscal: false,
-    contavilidad_completa: true,
+  const [checked, setChecked] = useState<{ contabilidad_simplificada: boolean; contabilidad_completa: boolean }>({
+    contabilidad_simplificada: false,
+    contabilidad_completa: true,
   });
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -233,17 +255,17 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
   const handleClick = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (e.currentTarget.name === 'regimen_fiscal')
+    if (e.currentTarget.name === 'contabilidad_simplificada')
       setChecked({
         ...checked,
-        ['regimen_fiscal']: !checked.regimen_fiscal,
-        ['contavilidad_completa']: (checked.contavilidad_completa = false),
+        ['contabilidad_simplificada']: !checked.contabilidad_simplificada,
+        ['contabilidad_completa']: (checked.contabilidad_completa = false),
       });
     if (e.currentTarget.name === 'contabilidad_completa')
       setChecked({
         ...checked,
-        ['contavilidad_completa']: !checked.contavilidad_completa,
-        ['regimen_fiscal']: (checked.regimen_fiscal = false),
+        ['contabilidad_completa']: !checked.contabilidad_completa,
+        ['contabilidad_simplificada']: (checked.contabilidad_simplificada = false),
       });
   };
 
@@ -281,14 +303,31 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
       <div className="flex flex-col gap-y-2">
         <p className="font-ember font-normal text-[14px] text-custom-negro-1">Tipo de contabilidad.</p>
         <div className="flex gap-x-7">
-          <button
-            name="regimen_fiscal"
+          {data.typeContabilidad.map((item) => (
+            <div key={item.id}>
+              <button
+                name={item.type}
+                onClick={handleClick}
+                className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
+                  checked[item.type as keyof accoutingOptions]
+                    ? 'border-custom-azul-3 bg-[#f1faff]'
+                    : 'border-custom-gris-2'
+                }`}>
+                <input type="radio" checked={checked[item.type as keyof accoutingOptions]} readOnly className="mr-2" />
+                <label className="font-ember font-normal text-[14px] cursor-pointer">{item.name}</label>
+              </button>
+            </div>
+          ))}
+          {/* <button
+            name={item.type}
             onClick={handleClick}
             className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
-              checked.regimen_fiscal ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
+              checked[item.type as keyof ContabilidadTypes]
+                ? 'border-custom-azul-3 bg-[#f1faff]'
+                : 'border-custom-gris-2'
             }`}>
             <input type="radio" checked={checked.regimen_fiscal} readOnly className="mr-2" />
-            <label className="font-ember font-normal text-[14px] cursor-pointer">Contabilidad completa</label>
+            <label className="font-ember font-normal text-[14px] cursor-pointer">{item.type}</label>
           </button>
           <button
             name="contabilidad_completa"
@@ -298,7 +337,7 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
             }`}>
             <input type="radio" checked={checked.contavilidad_completa} readOnly className="mr-2" />
             <label className="font-ember font-normal text-[14px] cursor-pointer">Contabilidad simplificada</label>
-          </button>
+          </button> */}
         </div>
         <div>
           <div className="flex items-end gap-x-8">
@@ -380,7 +419,7 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
       usuarios_del_sistema: [],
     },
     section4: {
-      fecha: 0,
+      fecha: 2024,
     },
     section5: {
       libro_caja: false,
@@ -389,8 +428,15 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
         moneda: '',
         monto: 0,
       },
-      opciones_regimen: '',
-      tipo_contabilidad: '',
+      opciones_regimen: {
+        contabilidad_completa: true,
+        contabilidad_simplificada: false,
+      },
+      tipo_contabilidad: {
+        Régimen_14A_semi_integrado: false,
+        Régimen_Propyme_14DN3: false,
+        Régimen_Propyme_14DN8: false,
+      },
     },
   });
   console.log(crearEmpresa);
@@ -419,7 +465,7 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
           />
         )}
         {infoEmpresa.section === 'periodo_contable' && (
-          <FormPeriodoContable data={infoEmpresa.infoEmpresa as PeriodoContable} />
+          <FormPeriodoContable data={infoEmpresa.infoEmpresa as PeriodoContable} setCrearEmpresa={setCrearEmpresa} />
         )}
         {infoEmpresa.section === 'regimen_tributario' && (
           <FormRegimenTributario data={infoEmpresa.infoEmpresa as RegimenTributario} />

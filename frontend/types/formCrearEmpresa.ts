@@ -17,6 +17,7 @@ export interface datosContador {
 }
 
 export interface dataUsuaruosSistema {
+  id: string;
   Correo: string;
   Nombre: string;
 }
@@ -34,9 +35,20 @@ interface data_monto_apertura_libro_caja {
   moneda: string;
 }
 
+export interface accoutingOptions {
+  contabilidad_completa: boolean;
+  contabilidad_simplificada: boolean;
+}
+
+export interface typesTaxes {
+  Régimen_14A_semi_integrado: boolean;
+  Régimen_Propyme_14DN3: boolean;
+  Régimen_Propyme_14DN8: boolean;
+}
+
 export interface régimenTributario {
-  opciones_regimen: string;
-  tipo_contabilidad: string;
+  opciones_regimen: accoutingOptions;
+  tipo_contabilidad: typesTaxes;
   libro_caja: boolean;
   libro_ingresos_egresos: boolean;
   monto_apertura_libro_caja: data_monto_apertura_libro_caja;
