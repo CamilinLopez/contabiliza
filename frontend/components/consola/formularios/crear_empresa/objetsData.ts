@@ -130,15 +130,31 @@ export const regimenTributario: TypeCrearempresa = {
       {
         id: '12597635d',
         name: 'Régimen 14A semi integrado',
+        type: 'Régimen_14A_semi_integrado',
       },
       {
         id: '46698736ñ',
         name: 'Régimen Propyme 14DN°3',
+        type: 'Régimen_Propyme_14DN3',
       },
       {
         id: '785436985l',
         name: 'Régimen Propyme 14DN°8',
+        type: 'Régimen_Propyme_14DN8',
       },
     ],
+    registroFinanciero: [
+      {
+        id: 'polkfgtr8',
+        name: 'Libro de caja.',
+        type: 'Libro_de_caja',
+      },
+      {
+        id: 'pñlfhrwq5',
+        name: 'Libro de ingresos y egresos.',
+        type: 'Libro_de_ingresos_y_egresos',
+      },
+    ],
+    currencies: ['USD', 'COP', 'CLP', 'EUR'],
   },
 };

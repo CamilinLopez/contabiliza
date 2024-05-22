@@ -1,7 +1,7 @@
 'use client';
 
-import { Options, PeriodoContable, RegimenTributario, CrearEmpresa, ContabilidadTypes } from '@/types/createEmpresa';
-import { FormCrearEmpresatype, accoutingOptions, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
+import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
+import { FormCrearEmpresatype, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -243,48 +243,71 @@ const FormPeriodoContable = ({
   );
 };
 
-const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
-  const [checked, setChecked] = useState<{ contabilidad_simplificada: boolean; contabilidad_completa: boolean }>({
-    contabilidad_simplificada: false,
-    contabilidad_completa: true,
-  });
-  const [selectedOption, setSelectedOption] = useState<string>('');
+const FormRegimenTributario = ({
+  data,
+  setCrearEmpresa,
+  crearEmpresa,
+}: {
+  data: RegimenTributario;
+  setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+  crearEmpresa: FormCrearEmpresatype;
+}) => {
+  const [registroFinanciero, setRegistroFinanciero] = useState<string>('Libro de caja.');
+  const [montoLibroCaja, setMontoLibroCaja] = useState<number | string>('');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    if (e.currentTarget.name === 'contabilidad_simplificada')
-      setChecked({
-        ...checked,
-        ['contabilidad_simplificada']: !checked.contabilidad_simplificada,
-        ['contabilidad_completa']: (checked.contabilidad_completa = false),
-      });
-    if (e.currentTarget.name === 'contabilidad_completa')
-      setChecked({
-        ...checked,
-        ['contabilidad_completa']: !checked.contabilidad_completa,
-        ['contabilidad_simplificada']: (checked.contabilidad_simplificada = false),
-      });
+    const name = e.currentTarget.name;
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section5: {
+        ...prevState.section5,
+        tipo_contabilidad: name,
+      },
+    }));
   };
 
   const handleCheckboxChange = (value: string) => {
-    setSelectedOption(value);
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section5: {
+        ...prevState.section5,
+        opciones_regimen: value,
+      },
+    }));
   };
-  const currencies = ['USD', 'COP', 'EUR', 'CLP'];
+
+  const handleRegistroFinanciero = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.currentTarget;
+
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section5: {
+        ...prevState.section5,
+        [name]: checked,
+      },
+    }));
+  };
+
+  const handleMontoLibroCaja = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (!isNaN(Number(value))) setMontoLibroCaja(Number(value));
+  };
 
   const handleSelectCurrency = (currency: string) => {
     setSelectedCurrency(currency);
     setIsMenuOpen(false); // Cierra el menú cuando se selecciona una opción
   };
+
   return (
     <div className="flex flex-col gap-y-4">
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
         Configura el régimen tributario de tu empresa según tus necesidades específicas. Elige entre las siguientes
         opciones.
       </p>
-      <div className="flex flex-col gap-y-2">
+      <div id="Opciones para el régimen tributario." className="flex flex-col gap-y-2">
         <p className="font-ember font-normal text-[14px] text-custom-negro-1">Opciones para el régimen tributario.</p>
         <div>
           {data.typeRegimenFiscal.map((item) => (
@@ -292,7 +315,7 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
               <input
                 type="checkbox"
                 name={item.name}
-                checked={selectedOption === item.name}
+                checked={crearEmpresa.section5.opciones_regimen === item.name}
                 onChange={() => handleCheckboxChange(item.name)}
               />
               <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">{item.name}</label>
@@ -300,7 +323,7 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-y-2">
+      <div id="Tipo de contabilidad." className="flex flex-col gap-y-2">
         <p className="font-ember font-normal text-[14px] text-custom-negro-1">Tipo de contabilidad.</p>
         <div className="flex gap-x-7">
           {data.typeContabilidad.map((item) => (
@@ -309,86 +332,79 @@ const FormRegimenTributario = ({ data }: { data: RegimenTributario }) => {
                 name={item.type}
                 onClick={handleClick}
                 className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
-                  checked[item.type as keyof accoutingOptions]
+                  crearEmpresa.section5.tipo_contabilidad === item.type
                     ? 'border-custom-azul-3 bg-[#f1faff]'
                     : 'border-custom-gris-2'
                 }`}>
-                <input type="radio" checked={checked[item.type as keyof accoutingOptions]} readOnly className="mr-2" />
+                <input
+                  type="radio"
+                  checked={crearEmpresa.section5.tipo_contabilidad === item.type}
+                  readOnly
+                  className="mr-2"
+                />
                 <label className="font-ember font-normal text-[14px] cursor-pointer">{item.name}</label>
               </button>
             </div>
           ))}
-          {/* <button
-            name={item.type}
-            onClick={handleClick}
-            className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
-              checked[item.type as keyof ContabilidadTypes]
-                ? 'border-custom-azul-3 bg-[#f1faff]'
-                : 'border-custom-gris-2'
-            }`}>
-            <input type="radio" checked={checked.regimen_fiscal} readOnly className="mr-2" />
-            <label className="font-ember font-normal text-[14px] cursor-pointer">{item.type}</label>
-          </button>
-          <button
-            name="contabilidad_completa"
-            onClick={handleClick}
-            className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
-              checked.contavilidad_completa ? 'border-custom-azul-3 bg-[#f1faff]' : 'border-custom-gris-2'
-            }`}>
-            <input type="radio" checked={checked.contavilidad_completa} readOnly className="mr-2" />
-            <label className="font-ember font-normal text-[14px] cursor-pointer">Contabilidad simplificada</label>
-          </button> */}
         </div>
-        <div>
-          <div className="flex items-end gap-x-8">
+      </div>
+      <div id="Registro financiero.">
+        <div className="flex items-end gap-x-8">
+          <div className="flex flex-col gap-y-2">
+            <p className="font-ember font-normal text-[14px] text-custom-negro-1">Registro financiero.</p>
             <div>
-              <div className="flex gap-x-3">
-                <input type="checkbox" className="cursor-pointer" />
-                <label className="font-ember font-normal text-[14px] text-custom-negro-1">libro de caja.</label>
-              </div>
-              <div className="flex gap-x-3">
-                <input type="checkbox" className="cursor-pointer" />
-                <label className="font-ember font-normal text-[14px] text-custom-negro-1">
-                  Libro de ingresos y egresos.
-                </label>
-              </div>
+              {data.registroFinanciero.map((item) => (
+                <div key={item.id} className="flex gap-x-3">
+                  <input
+                    type="checkbox"
+                    className="cursor-pointer"
+                    name={item.type}
+                    checked={Boolean(crearEmpresa.section5[item.type as keyof typeof crearEmpresa.section5])}
+                    onChange={(e) => handleRegistroFinanciero(e)}
+                  />
+                  <label className="font-ember font-normal text-[14px] text-custom-negro-1">{item.name}</label>
+                </div>
+              ))}
             </div>
-            <div className="flex items-end gap-x-3">
-              <label className="font-ember font-normal text-[14px] text-custom-negro-1">
-                Monto apertura libro caja.
-              </label>
-              <input type="number" name="" id="" className="h-[25px] w-[100px] border-[1px] border-custom-gris-2" />
-              <div className="relative">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsMenuOpen(!isMenuOpen);
-                  }}
-                  className="font-ember font-normal text-[14px] h-[25px] flex items-center gap-x-1">
-                  {selectedCurrency || 'CLP'}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-3 h-3 text-current">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </button>
-                {isMenuOpen && (
-                  <ul className="absolute top-full left-55 bg-white border border-gray-400">
-                    {currencies.map((currency) => (
-                      <li
-                        key={currency}
-                        onClick={() => handleSelectCurrency(currency)}
-                        className="px-1 py-1 cursor-pointer hover:bg-gray-100 font-ember font-normal text-[14px]">
-                        {currency}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+          </div>
+          <div className="flex items-end gap-x-3">
+            <label className="font-ember font-normal text-[14px] text-custom-negro-1">Monto apertura libro caja.</label>
+            <input
+              type="number"
+              value={montoLibroCaja}
+              onChange={(e) => handleMontoLibroCaja(e)}
+              className="h-[25px] w-[100px] border-[1px] border-custom-gris-2"
+            />
+            <div className="relative">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+                className="font-ember font-normal text-[14px] h-[25px] flex items-center gap-x-1">
+                {selectedCurrency || 'CLP'}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-3 h-3 text-current">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              {isMenuOpen && (
+                <ul className="absolute top-full left-55 bg-white border border-gray-400">
+                  {data.currencies.map((currency) => (
+                    <li
+                      key={currency}
+                      onClick={() => handleSelectCurrency(currency)}
+                      className="px-1 py-1 cursor-pointer hover:bg-gray-100 font-ember font-normal text-[14px]">
+                      {currency}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>
@@ -422,21 +438,14 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
       fecha: 2024,
     },
     section5: {
-      libro_caja: false,
-      libro_ingresos_egresos: false,
+      Libro_de_caja: false,
+      Libro_de_ingresos_y_egresos: false,
       monto_apertura_libro_caja: {
         moneda: '',
         monto: 0,
       },
-      opciones_regimen: {
-        contabilidad_completa: true,
-        contabilidad_simplificada: false,
-      },
-      tipo_contabilidad: {
-        Régimen_14A_semi_integrado: false,
-        Régimen_Propyme_14DN3: false,
-        Régimen_Propyme_14DN8: false,
-      },
+      opciones_regimen: 'Régimen 14A semi integrado',
+      tipo_contabilidad: 'contabilidad_completa',
     },
   });
   console.log(crearEmpresa);
@@ -468,7 +477,11 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
           <FormPeriodoContable data={infoEmpresa.infoEmpresa as PeriodoContable} setCrearEmpresa={setCrearEmpresa} />
         )}
         {infoEmpresa.section === 'regimen_tributario' && (
-          <FormRegimenTributario data={infoEmpresa.infoEmpresa as RegimenTributario} />
+          <FormRegimenTributario
+            data={infoEmpresa.infoEmpresa as RegimenTributario}
+            setCrearEmpresa={setCrearEmpresa}
+            crearEmpresa={crearEmpresa}
+          />
         )}
       </form>
     </div>

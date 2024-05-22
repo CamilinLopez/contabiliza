@@ -10,21 +10,17 @@ export interface PeriodoContable {
   text: string;
 }
 
-export interface Optionsfiscal {
+export interface OptionsTerms {
   id: string;
   name: string;
   type: string;
-}
-
-export interface ContabilidadTypes {
-  id: string;
-  type: string;
-  name: string;
 }
 
 export interface RegimenTributario {
-  typeContabilidad: ContabilidadTypes[];
-  typeRegimenFiscal: Optionsfiscal[];
+  typeContabilidad: OptionsTerms[];
+  typeRegimenFiscal: OptionsTerms[];
+  registroFinanciero: OptionsTerms[];
+  currencies: string[];
 }
 
 export interface TypeCrearempresa {
