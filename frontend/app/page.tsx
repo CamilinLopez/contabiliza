@@ -1,13 +1,14 @@
 import Management from '@/components/welcomePage/registerUser';
 import Navigation from '@/components/welcomePage/navigation';
-import Foter from '@/components/welcomePage/foter';
+import Footer from '@/components/welcomePage/footer';
 
 export default function Home() {
   return (
     <>
       <Navigation />
       <Management />
-      <Foter />
+      <Footer />
     </>
+    
   );
 }

@@ -1,9 +1,17 @@
+'use client'
 import Link from 'next/link';
-import React from 'react';
-import { Icon } from '../utils/fracments';
+import React, { useState } from 'react';
+import { Icon } from '../utils/fragments';
 import { Buttons, ParrowDown } from './fragments';
+import ServiciosModal from './serviciosModal';
 
 export default function Navconsola() {
+  const [showServiciosModal, setShowServiciosModal] = useState(false); // Estado para controlar la visibilidad del modal
+
+  const toggleServiciosModal = () => {
+    setShowServiciosModal(!showServiciosModal);
+  };
+
   return (
     <div className="bg-custom-azul-1 w-full">
       <div className="p-5 h-[40px] w-full flex items-center justify-between gap-x-3">
@@ -14,7 +22,7 @@ export default function Navconsola() {
             </Link>
           </div>
           <div className="border-r border-r-gray-500 h-[20px]"></div>
-          <div className="cursor-pointer flex items-center gap-x-2 text-white hover:text-custom-naranja">
+          <div className="cursor-pointer flex items-center gap-x-2 text-white hover:text-custom-naranja" onClick={toggleServiciosModal}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="4" height="4" rx="1" fill="none" className="fill-current"></rect>
               <rect y="6" width="4" height="4" rx="1" fill="none" className="fill-current"></rect>
@@ -27,6 +35,7 @@ export default function Navconsola() {
               <rect x="12" y="12" width="4" height="4" rx="1" fill="none" className="fill-current"></rect>
             </svg>
             <p className="font-ember font-medium text-[12px]">Servicios</p>
+            {showServiciosModal && <ServiciosModal onClose={toggleServiciosModal} />}
           </div>
           <div className="relative w-full">
             <input
@@ -48,13 +57,6 @@ export default function Navconsola() {
         <div className="w-auto flex items-center gap-x-10">
           <Buttons />
           <ParrowDown text="Cuenta" styles="font-ember font-medium text-[12px]" />
-        </div>
-      </div>
-      <div className="h-[30px] p-5 flex items-center">
-        <div className="">
-          <p className="font-ember text-[12px] font-semibold text-white hover:border-[1px] border-[#879596]">
-            PROYECTO 1
-          </p>
         </div>
       </div>
     </div>

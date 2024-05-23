@@ -4,25 +4,24 @@ import Link from 'next/link';
 import { CustomLink } from '../utils/customElements';
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, CloseButton, MagnificButton } from './customElemets';
-import { Icon, ParrowDown } from '../utils/fracments';
+import { Icon, ParrowDown } from '../utils/fragments';
 
 const listOptions: string[] = [
-  're:Invent',
   'Productos',
   'Soluciones',
   'Precios',
   'Documentación',
   'Aprender',
   'Red de socios',
-  'Contaviliza Marketplace',
+  'Contabiliza Marketplace',
   'Eventos',
   'Explorar más',
 ];
 const PrintText = () => {
   return (
-    <div className="flex gap-x-9 justify-between items-center cursor-pointer text-custom-gris">
+    <div className="text-white flex gap-x-9 justify-between items-center cursor-pointer text-custom-gris ">
       {listOptions.map((text) => (
-        <p key={text} className="whitespace-nowrap font-ember font-[500] text-custom-size3 hover:text-custom-naranja">
+        <p key={text} className="whitespace-nowrap font-ember font-[500] text-custom-size3 hover:text-custom-naranja ">
           {text}
         </p>
       ))}
@@ -79,15 +78,15 @@ export default function Navigation() {
                 <Icon styles="text-[34px]" />
               </Link>
             </div>
-            <div className="flex items-center gap-x-5 w-auto">
-              <Link href={'/'} className="font-ember font-bold text-custom-gris text-[13px] hover:text-custom-naranja">
-                Contacte con nosotros
+            <div className="text-white flex items-center gap-x-5 w-auto">
+              <Link href={'/consola'} className="font-ember font-bold text-custom-gris text-[13px] hover:text-custom-naranja">
+                Consola
               </Link>
               <ParrowDown text="Soporte" styles="font-ember font-[600] text-[13px]" />
               <ParrowDown text="Idioma" styles="font-ember font-[600] text-[13px]" />
               <ParrowDown text="Mi cuenta" styles="font-ember font-[600] text-[13px]" />
-              <CustomLink href="/" className="w-[213px]">
-                Inicie sesión en la consola
+              <CustomLink href="/sign-in" className="w-[213px] hover:text-black">
+                Iniciar sesión
               </CustomLink>
             </div>
           </div>
@@ -109,7 +108,7 @@ export default function Navigation() {
       </div>
       <div className="bg-white flex items-center gap-x-16 px-20 h-10">
         <Link href={'/'} className="font-ember font-[600] text-[16px] text-custom-azul-2 hover:text-custom-azul-3">
-          Consola de administración de ContaViliza
+          Consola de administración de Contabiliza
         </Link>
         <div className="flex gap-x-6">
           <Link href={'/'} className="font-ember font-[600] text-[13px] hover:text-custom-azul-3">

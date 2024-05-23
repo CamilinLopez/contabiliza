@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         ember: ['"Amazon Ember"', 'sans-serif'],
+        courgette: ['Courgette', 'sans-serif'],
       },
       colors: {
         'custom-azul': {
@@ -18,9 +19,9 @@ const config: Config = {
           '3': '#0972d3',
         },
         'custom-naranja': '#ff9900',
-        'custom-negro': '#000716',
-        'custom-blanco': '#ffffff',
-        'custom-gris': '#dddddd',
+        'custom-negro': { '1': '#000716', '2': '#16191f' },
+        'custom-blanco': { '1': '#ffffff', '2': '#fafafa' },
+        'custom-gris': { '1': '#dddddd', '2': '#545b64' },
         'custom-naranja-darck': '#cc7a00',
       },
       fontSize: {
@@ -47,6 +48,12 @@ const config: Config = {
         lg: '1100px',
         xl: '1200px',
         '2xl': '1400px',
+      },
+      boxShadow: {
+        'thin-black': '0px 1px 1px 0px rgba(0, 0, 0, 0.3)',
+      },
+      height: {
+        'h-bar': 'calc(100vh - 70px)',
       },
     },
   },

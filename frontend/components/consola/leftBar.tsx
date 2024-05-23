@@ -17,6 +17,7 @@ export default function Bar() {
 
   return (
     <div
+      id="leftBar"
       className={`bg-white ${
         expande ? 'w-[250px] transition-all duration-500 ease-in-out' : 'w-[40px] hover:bg-slate-100'
       } h-screen border-r-[2px] border-gray-300`}>
@@ -34,19 +35,22 @@ export default function Bar() {
             </button>
           </div>
         ) : (
-          <div className="py-4 px-4 w-full h-[84px] border-b-[1px] border-gray-300">
-            {showDiv && (
-              <div className="flex items-start justify-between">
-                <h1 className="font-ember font-bold text-[18px] text-custom-negro">
-                  Página de inicio de <br /> la Consola
-                </h1>
-                <button className="text-slate-500 hover:text-slate-600" onClick={() => open()}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-7 h-7">
-                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-                  </svg>
-                </button>
-              </div>
-            )}
+          <div>
+            <div className="py-4 px-4 w-full h-[84px] border-b-[1px] border-gray-300">
+              {showDiv && (
+                <div className="flex items-start justify-between">
+                  <h1 className="font-ember font-bold text-[18px] text-custom-negro">
+                    Página de inicio de <br /> la Consola
+                  </h1>
+                  <button className="text-slate-500 hover:text-slate-600" onClick={() => open()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-7 h-7">
+                      <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className="p-4">{showDiv && <div>hola</div>}</div>
           </div>
         )}
       </div>
