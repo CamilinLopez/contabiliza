@@ -4,6 +4,9 @@ import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/typ
 import { FormCrearEmpresatype, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { AppDispatch } from '@/redux/store';
+import { useDispatch } from 'react-redux';
+import { updateSection1, updateAll } from '@/redux/slice/formCrearEmpresa';
 
 const FormCrearempresa = ({
   data,
@@ -26,6 +29,7 @@ const FormCrearempresa = ({
       }));
     }
   };
+
   return (
     <div className="flex flex-col gap-y-7">
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
@@ -252,7 +256,6 @@ const FormRegimenTributario = ({
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
   crearEmpresa: FormCrearEmpresatype;
 }) => {
-  const [registroFinanciero, setRegistroFinanciero] = useState<string>('Libro de caja.');
   const [montoLibroCaja, setMontoLibroCaja] = useState<number | string>('');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
@@ -448,7 +451,8 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
       tipo_contabilidad: 'contabilidad_completa',
     },
   });
-  console.log(crearEmpresa);
+  const dispatch: AppDispatch = useDispatch();
+  dispatch(updateAll(crearEmpresa));
   return (
     <div>
       <form className="flex flex-col gap-y-8" action="">
