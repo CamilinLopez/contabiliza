@@ -12,7 +12,7 @@ export default function LayoutConsola({ children }: { children: ReactNode }) {
         <div className="sticky top-0 h-full">
           <LeftBar />
         </div>
-        <div>{children}</div>
+        <div className='px-8 py-3' >{children}</div>
       </div>
     </div>
   );

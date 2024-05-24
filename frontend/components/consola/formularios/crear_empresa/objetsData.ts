@@ -116,12 +116,12 @@ export const regimenTributario: TypeCrearempresa = {
     typeContabilidad: [
       {
         id: 'pñkjsnbg9',
-        type: 'contabilidad_completa',
+        type: 'Contabilidad_completa',
         name: 'Contabilidad completa',
       },
       {
         id: 'pñlrtyuw7',
-        type: 'contabilidad_simplificada',
+        type: 'Contabilidad_simplificada',
         name: 'Contabilidad simplificada',
       },
     ],

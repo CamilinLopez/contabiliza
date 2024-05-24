@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '@/redux/store';
 import { useDispatch } from 'react-redux';
-import { updateSection1, updateAll } from '@/redux/slice/formCrearEmpresa';
+import { updateAll } from '@/redux/slice/formCrearEmpresa';
 
 const FormCrearempresa = ({
   data,
@@ -256,9 +256,7 @@ const FormRegimenTributario = ({
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
   crearEmpresa: FormCrearEmpresatype;
 }) => {
-  const [montoLibroCaja, setMontoLibroCaja] = useState<number | string>('');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>('');
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -267,17 +265,49 @@ const FormRegimenTributario = ({
       ...prevState,
       section5: {
         ...prevState.section5,
-        tipo_contabilidad: name,
+        section2: {
+          ...prevState.section5.section2,
+          Contabilidad_completa: false,
+          Contabilidad_simplificada: false,
+        },
       },
     }));
-  };
-
-  const handleCheckboxChange = (value: string) => {
     setCrearEmpresa((prevState) => ({
       ...prevState,
       section5: {
         ...prevState.section5,
-        opciones_regimen: value,
+        section2: {
+          ...prevState.section5.section2,
+          [name]: true,
+        },
+      },
+    }));
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.currentTarget;
+
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section5: {
+        ...prevState.section5,
+        section1: {
+          ...prevState.section5.section1,
+          Régimen_14A_semi_integrado: false,
+          Régimen_Propyme_14DN3: false,
+          Régimen_Propyme_14DN8: false,
+        },
+      },
+    }));
+
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section5: {
+        ...prevState.section5,
+        section1: {
+          ...prevState.section5.section1,
+          [name]: checked,
+        },
       },
     }));
   };
@@ -289,18 +319,46 @@ const FormRegimenTributario = ({
       ...prevState,
       section5: {
         ...prevState.section5,
-        [name]: checked,
+        section3: {
+          ...prevState.section5.section3,
+          [name]: checked,
+        },
       },
     }));
   };
 
   const handleMontoLibroCaja = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (!isNaN(Number(value))) setMontoLibroCaja(Number(value));
+    const { name, value } = e.currentTarget;
+    if (!isNaN(Number(value)))
+      setCrearEmpresa((prevState) => ({
+        ...prevState,
+        section5: {
+          ...prevState.section5,
+          section3: {
+            ...prevState.section5.section3,
+            Monto_apertura_libro_caja: {
+              ...prevState.section5.section3.Monto_apertura_libro_caja,
+              [name]: value,
+            },
+          },
+        },
+      }));
   };
 
   const handleSelectCurrency = (currency: string) => {
-    setSelectedCurrency(currency);
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section5: {
+        ...prevState.section5,
+        section3: {
+          ...prevState.section5.section3,
+          Monto_apertura_libro_caja: {
+            ...prevState.section5.section3.Monto_apertura_libro_caja,
+            moneda: currency,
+          },
+        },
+      },
+    }));
     setIsMenuOpen(false); // Cierra el menú cuando se selecciona una opción
   };
 
@@ -317,9 +375,9 @@ const FormRegimenTributario = ({
             <div key={item.id} className="flex items-center gap-x-3">
               <input
                 type="checkbox"
-                name={item.name}
-                checked={crearEmpresa.section5.opciones_regimen === item.name}
-                onChange={() => handleCheckboxChange(item.name)}
+                name={item.type}
+                checked={crearEmpresa.section5.section1[item.type as keyof typeof crearEmpresa.section5.section1]}
+                onChange={(e) => handleCheckboxChange(e)}
               />
               <label className="font-ember font-normal text-[14px] text-custom-negro-1 ">{item.name}</label>
             </div>
@@ -335,13 +393,13 @@ const FormRegimenTributario = ({
                 name={item.type}
                 onClick={handleClick}
                 className={`flex items-center gap-x-3 border-[1px]  w-[260px] h-[62px] px-4 ${
-                  crearEmpresa.section5.tipo_contabilidad === item.type
+                  crearEmpresa.section5.section2[item.type as keyof typeof crearEmpresa.section5.section2]
                     ? 'border-custom-azul-3 bg-[#f1faff]'
                     : 'border-custom-gris-2'
                 }`}>
                 <input
                   type="radio"
-                  checked={crearEmpresa.section5.tipo_contabilidad === item.type}
+                  checked={crearEmpresa.section5.section2[item.type as keyof typeof crearEmpresa.section5.section2]}
                   readOnly
                   className="mr-2"
                 />
@@ -362,7 +420,9 @@ const FormRegimenTributario = ({
                     type="checkbox"
                     className="cursor-pointer"
                     name={item.type}
-                    checked={Boolean(crearEmpresa.section5[item.type as keyof typeof crearEmpresa.section5])}
+                    checked={Boolean(
+                      crearEmpresa.section5.section3[item.type as keyof typeof crearEmpresa.section5.section3],
+                    )}
                     onChange={(e) => handleRegistroFinanciero(e)}
                   />
                   <label className="font-ember font-normal text-[14px] text-custom-negro-1">{item.name}</label>
@@ -373,8 +433,9 @@ const FormRegimenTributario = ({
           <div className="flex items-end gap-x-3">
             <label className="font-ember font-normal text-[14px] text-custom-negro-1">Monto apertura libro caja.</label>
             <input
-              type="number"
-              value={montoLibroCaja}
+              type="text"
+              name="monto"
+              value={crearEmpresa.section5.section3.Monto_apertura_libro_caja.monto}
               onChange={(e) => handleMontoLibroCaja(e)}
               className="h-[25px] w-[100px] border-[1px] border-custom-gris-2"
             />
@@ -385,7 +446,7 @@ const FormRegimenTributario = ({
                   setIsMenuOpen(!isMenuOpen);
                 }}
                 className="font-ember font-normal text-[14px] h-[25px] flex items-center gap-x-1">
-                {selectedCurrency || 'CLP'}
+                {crearEmpresa.section5.section3.Monto_apertura_libro_caja.moneda || 'CLP'}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -418,6 +479,7 @@ const FormRegimenTributario = ({
 
 export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
   const [crearEmpresa, setCrearEmpresa] = useState<FormCrearEmpresatype>({
+    id: '',
     section1: {
       Comuna: '',
       Correo_electronico: '',
@@ -441,14 +503,23 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
       fecha: 2024,
     },
     section5: {
-      Libro_de_caja: false,
-      Libro_de_ingresos_y_egresos: false,
-      monto_apertura_libro_caja: {
-        moneda: '',
-        monto: 0,
+      section1: {
+        Régimen_14A_semi_integrado: true,
+        Régimen_Propyme_14DN3: false,
+        Régimen_Propyme_14DN8: false,
       },
-      opciones_regimen: 'Régimen 14A semi integrado',
-      tipo_contabilidad: 'contabilidad_completa',
+      section2: {
+        Contabilidad_completa: true,
+        Contabilidad_simplificada: false,
+      },
+      section3: {
+        Libro_de_caja: true,
+        Libro_de_ingresos_y_egresos: false,
+        Monto_apertura_libro_caja: {
+          moneda: 'COP',
+          monto: '',
+        },
+      },
     },
   });
   const dispatch: AppDispatch = useDispatch();

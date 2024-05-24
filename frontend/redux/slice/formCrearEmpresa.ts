@@ -2,6 +2,7 @@ import { FormCrearEmpresatype } from '@/types/formCrearEmpresa';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: FormCrearEmpresatype = {
+  id: '',
   section1: {
     Comuna: '',
     Correo_electronico: '',
@@ -25,14 +26,23 @@ const initialState: FormCrearEmpresatype = {
     fecha: 0,
   },
   section5: {
-    Libro_de_caja: false,
-    Libro_de_ingresos_y_egresos: false,
-    monto_apertura_libro_caja: {
-      moneda: '',
-      monto: 0,
+    section1: {
+      Régimen_14A_semi_integrado: true,
+      Régimen_Propyme_14DN3: false,
+      Régimen_Propyme_14DN8: false,
     },
-    opciones_regimen: '',
-    tipo_contabilidad: '',
+    section2: {
+      Contabilidad_completa: true,
+      Contabilidad_simplificada: false,
+    },
+    section3: {
+      Libro_de_caja: false,
+      Libro_de_ingresos_y_egresos: false,
+      Monto_apertura_libro_caja: {
+        moneda: 'COP',
+        monto: '',
+      },
+    },
   },
 };
 
