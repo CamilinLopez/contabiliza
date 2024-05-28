@@ -1,4 +1,4 @@
-import { TypeCrearempresa } from '@/types/createEmpresa';
+import { TypeCrearempresa } from '../types/createEmpresa';
 
 export const crearEmpresa: TypeCrearempresa = {
   section: 'crear_empresa',
@@ -13,7 +13,7 @@ export const crearEmpresa: TypeCrearempresa = {
       id: '15793576i',
       text: 'RUT empresa',
       placeholder: 'ejemplo, 74693157-5',
-      name: 'RUT',
+      name: 'RUT_empresa',
     },
     {
       id: '14735973d',

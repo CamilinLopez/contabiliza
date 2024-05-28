@@ -6,7 +6,7 @@ import {
   usuarioSistema,
   periodoContable,
   regimenTributario,
-} from '@/components/consola/formularios/crear_empresa/objetsData';
+} from '@/ArraysData/objetsData';
 import Resumen from '@/components/consola/formularios/crear_empresa/resumen';
 
 export default function CrearEmpresa() {
@@ -20,7 +20,7 @@ export default function CrearEmpresa() {
         <CompanyData title="Periodo contable" data={periodoContable} />
         <CompanyData title="Régimen tributario" data={regimenTributario} />
       </div>
-      <div id="resumen" className="bg-white w-4/12 sticky top-4 h-full z-0">
+      <div id="resumen" className="bg-white w-4/12 sticky top-2 h-full z-0">
         <Resumen />
       </div>
     </div>

@@ -93,9 +93,9 @@ const Section3 = ({ section }: { section: usuariosSistema }) => {
     <div>
       <h1 className={`${styleH1}`}>{section.sectionName}</h1>
       {section.usuarios_del_sistema.map((item) => (
-        <div className="flex gap-x-7" key={item.id}>
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2">{item.Nombre}</p>
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2">{item.Correo}</p>
+        <div className="flex gap-x-7 justify-start" key={item.id}>
+          <p className="font-ember font-medium text-[12px] text-custom-gris-2 w-2/12">{item.Nombre}</p>
+          <p className="font-ember font-medium text-[12px] text-custom-gris-2 w-7/12">{item.Correo}</p>
         </div>
       ))}
     </div>
