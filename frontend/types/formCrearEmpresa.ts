@@ -1,6 +1,7 @@
 export interface datosEmpresa {
+  sectionName: string;
   Empresa: string;
-  RUT: number | string;
+  RUT_empresa: number | string;
   Giro: string;
   Dirección: string;
   Comuna: string;
@@ -12,6 +13,7 @@ export interface datosEmpresa {
 }
 
 export interface datosContador {
+  sectionName: string;
   Nombre: string;
   RUT: number | string;
 }
@@ -23,10 +25,12 @@ export interface dataUsuaruosSistema {
 }
 
 export interface usuariosSistema {
+  sectionName: string;
   usuarios_del_sistema: dataUsuaruosSistema[];
 }
 
 export interface periodoContable {
+  sectionName: string;
   fecha: number;
 }
 
@@ -52,19 +56,12 @@ interface registroFinanciero {
   Monto_apertura_libro_caja: data_monto_apertura_libro_caja;
 }
 
-interface régimenTributario {
+export interface régimenTributario {
+  sectionName: string;
   section1: regimenTributarioType;
   section2: tipoDeContabilidad;
   section3: registroFinanciero;
 }
-
-// export interface régimenTributario {
-//   opciones_regimen: string;
-//   tipo_contabilidad: string;
-//   Libro_de_caja: boolean;
-//   Libro_de_ingresos_y_egresos: boolean;
-//   monto_apertura_libro_caja: data_monto_apertura_libro_caja;
-// }
 
 export interface FormCrearEmpresatype {
   id: string;

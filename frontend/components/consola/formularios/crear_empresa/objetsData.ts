@@ -11,7 +11,7 @@ export const crearEmpresa: TypeCrearempresa = {
     },
     {
       id: '15793576i',
-      text: 'RUT',
+      text: 'RUT empresa',
       placeholder: 'ejemplo, 74693157-5',
       name: 'RUT',
     },

@@ -1,14 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { increment, decrement } from '@/redux/slice/slice';
-import { RootState, useAppDispatch } from '@/redux/store';
-import { useSelector } from 'react-redux';
+import { ResumenMenu } from './fracments';
 
 export default function Resumen() {
   const [hidden, setHidden] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const count = useSelector((state: RootState) => state.counter.value);
 
   return (
     <div className="w-auto h-auto shadow-thin-black">
@@ -44,12 +40,7 @@ export default function Resumen() {
         </div>
       </div>
       <div className={`bg-white p-5 w-full ${hidden && 'hidden'} `}>
-        <button onClick={() => dispatch(increment())}>increment</button>
-        <p>{count}</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
+        <ResumenMenu />
       </div>
     </div>
   );

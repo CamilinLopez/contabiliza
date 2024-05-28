@@ -2,11 +2,19 @@
 
 import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
 import { FormCrearEmpresatype, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '@/redux/store';
 import { useDispatch } from 'react-redux';
-import { updateAll } from '@/redux/slice/formCrearEmpresa';
+import {
+  updateAll,
+  updateSection1,
+  updateSection2,
+  updateSection3,
+  updateSection4,
+  updateSection5,
+} from '@/redux/slice/formCrearEmpresa';
+import { crearEmpresa } from './objetsData';
 
 const FormCrearempresa = ({
   data,
@@ -17,6 +25,12 @@ const FormCrearempresa = ({
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
   crearEmpresa: FormCrearEmpresatype;
 }) => {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSection1(crearEmpresa.section1));
+  }, [crearEmpresa.section1, dispatch]);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget) {
       const { name, value } = e.currentTarget;
@@ -75,6 +89,12 @@ const FormDatosContador = ({
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
   crearEmpresa: FormCrearEmpresatype;
 }) => {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSection2(crearEmpresa.section2));
+  }, [crearEmpresa.section2, dispatch]);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget) {
       const { name, value } = e.currentTarget;
@@ -127,6 +147,12 @@ const FormUsuarioSistema = ({
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
   crearEmpresa: FormCrearEmpresatype;
 }) => {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSection3(crearEmpresa.section3));
+  }, [crearEmpresa, dispatch]);
+
   const [usuariSistema, setUsuariSistema] = useState<dataUsuaruosSistema>({
     id: '',
     Correo: '',
@@ -144,6 +170,7 @@ const FormUsuarioSistema = ({
     setCrearEmpresa((prevState) => ({
       ...prevState,
       section3: {
+        ...prevState.section3,
         usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema, newUser],
       },
     }));
@@ -154,6 +181,7 @@ const FormUsuarioSistema = ({
     setCrearEmpresa((prevState) => ({
       ...prevState,
       section3: {
+        ...prevState.section3,
         usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema.filter((item) => item.id !== id)],
       },
     }));
@@ -208,19 +236,25 @@ const FormUsuarioSistema = ({
 const FormPeriodoContable = ({
   data,
   setCrearEmpresa,
+  crearEmpresa,
 }: {
   data: PeriodoContable;
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+  crearEmpresa: FormCrearEmpresatype;
 }) => {
-  const [year, setYear] = useState(new Date().getFullYear());
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSection4(crearEmpresa.section4));
+  }, [crearEmpresa.section4, dispatch]);
 
   const handleYearChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     const inputYear = parseInt(event.currentTarget.value);
     if (!isNaN(inputYear)) {
-      setYear(inputYear);
       setCrearEmpresa((prevState) => ({
         ...prevState,
         section4: {
+          ...prevState.section4,
           fecha: inputYear,
         },
       }));
@@ -236,7 +270,7 @@ const FormPeriodoContable = ({
         <input
           className="w-[180px] border-[1px] border-custom-gris-2"
           type="number"
-          value={year}
+          value={crearEmpresa.section4.fecha}
           onChange={handleYearChange}
           placeholder="YYYY"
           min="1900"
@@ -257,6 +291,12 @@ const FormRegimenTributario = ({
   crearEmpresa: FormCrearEmpresatype;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSection5(crearEmpresa.section5));
+  }, [crearEmpresa.section5, dispatch]);
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -481,28 +521,33 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
   const [crearEmpresa, setCrearEmpresa] = useState<FormCrearEmpresatype>({
     id: '',
     section1: {
-      Comuna: '',
-      Correo_electronico: '',
-      Dirección: '',
+      sectionName: 'Datos de la empresa',
       Empresa: '',
+      RUT_empresa: '',
       Giro: '',
-      Inicio_de_actividades: '',
+      Dirección: '',
+      Comuna: '',
       Representante_legal: '',
-      RUT: '',
       Rut_representante: '',
       Tipo_Empresa: '',
+      Inicio_de_actividades: '',
+      Correo_electronico: '',
     },
     section2: {
+      sectionName: 'Datos del contador',
       Nombre: '',
       RUT: '',
     },
     section3: {
+      sectionName: 'Usuarios del sistema',
       usuarios_del_sistema: [],
     },
     section4: {
+      sectionName: 'Periodo contable',
       fecha: 2024,
     },
     section5: {
+      sectionName: 'Régimen tributario',
       section1: {
         Régimen_14A_semi_integrado: true,
         Régimen_Propyme_14DN3: false,
@@ -516,14 +561,13 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
         Libro_de_caja: true,
         Libro_de_ingresos_y_egresos: false,
         Monto_apertura_libro_caja: {
-          moneda: 'COP',
+          moneda: '',
           monto: '',
         },
       },
     },
   });
-  const dispatch: AppDispatch = useDispatch();
-  dispatch(updateAll(crearEmpresa));
+
   return (
     <div>
       <form className="flex flex-col gap-y-8" action="">
@@ -549,7 +593,11 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
           />
         )}
         {infoEmpresa.section === 'periodo_contable' && (
-          <FormPeriodoContable data={infoEmpresa.infoEmpresa as PeriodoContable} setCrearEmpresa={setCrearEmpresa} />
+          <FormPeriodoContable
+            data={infoEmpresa.infoEmpresa as PeriodoContable}
+            setCrearEmpresa={setCrearEmpresa}
+            crearEmpresa={crearEmpresa}
+          />
         )}
         {infoEmpresa.section === 'regimen_tributario' && (
           <FormRegimenTributario
