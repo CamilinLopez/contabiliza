@@ -158,3 +158,33 @@ export const regimenTributario: TypeCrearempresa = {
     currencies: ['USD', 'COP', 'CLP', 'EUR'],
   },
 };
+
+export const sociosAccionistas: TypeCrearempresa = {
+  section: 'socios/accionistas',
+  infoEmpresa: [
+    {
+      id: 'lfrtpañj8',
+      name: 'Nombre',
+      placeholder: 'Carlos Arturo Ramirez Hernandez',
+      text: 'Nombre',
+    },
+    {
+      id: 'lprtlkad5',
+      name: 'Rut',
+      placeholder: '147896545-1',
+      text: 'Rut',
+    },
+    {
+      id: 'piekjaqg10',
+      name: '%Participación',
+      placeholder: '40.1111%',
+      text: 'Participación',
+    },
+    {
+      id: 'pleqfmca5',
+      name: 'Acciones',
+      placeholder: '400',
+      text: 'Acciones',
+    },
+  ],
+};

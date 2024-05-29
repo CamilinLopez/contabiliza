@@ -41,8 +41,8 @@ export const crearEmpresaInitialState = {
       Libro_de_caja: true,
       Libro_de_ingresos_y_egresos: false,
       Monto_apertura_libro_caja: {
-        moneda: '',
-        monto: '',
+        moneda: 'CLP',
+        monto: '0',
       },
     },
   },

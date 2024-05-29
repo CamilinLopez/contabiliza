@@ -7,14 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '@/redux/store';
 import { useDispatch } from 'react-redux';
 import {
-  updateAll,
   updateSection1,
   updateSection2,
   updateSection3,
   updateSection4,
   updateSection5,
 } from '@/redux/slice/formCrearEmpresa';
-import { crearEmpresa } from '@/ArraysData/objetsData';
 import { crearEmpresaInitialState } from '@/initialState';
 
 const FormCrearempresa = ({
@@ -518,6 +516,45 @@ const FormRegimenTributario = ({
   );
 };
 
+const FormSociosAccioniastas = ({
+  data,
+  setCrearEmpresa,
+  crearEmpresa,
+}: {
+  data: CrearEmpresa[];
+  setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
+  crearEmpresa: FormCrearEmpresatype;
+}) => {
+  return (
+    <div className="flex flex-col gap-y-7">
+      <p className="font-ember font-normal text-[14px] text-custom-gris-2">
+        Utiliza esta sección para añadir nuevos socios accionistas.
+      </p>
+      <div className="flex flex-col gap-y-4">
+        {data.map((item) => (
+          <div key={item.id}>
+            <p className="font-ember font-normal text-[14px] text-custom-negro-2">{item.name}</p>
+            <input
+              className="w-10/12 h-[32px] border-[1px] border-custom-gris-2 focus:outline-custom-azul-3 placeholder:font-courgette pl-2"
+              type="text"
+              placeholder={item.placeholder}
+              name={item.name}
+              value={crearEmpresa.section1[item.name as keyof typeof crearEmpresa.section1]}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex items-start">
+        <button
+          onClick={(e) => e.preventDefault()}
+          className="border-[1px] border-custom-gris-2 px-[20px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
+          Agrega un socio/accionista
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
   const [crearEmpresa, setCrearEmpresa] = useState<FormCrearEmpresatype>(crearEmpresaInitialState);
 
@@ -555,6 +592,13 @@ export function Form({ infoEmpresa }: { infoEmpresa: Options }) {
         {infoEmpresa.section === 'regimen_tributario' && (
           <FormRegimenTributario
             data={infoEmpresa.infoEmpresa as RegimenTributario}
+            setCrearEmpresa={setCrearEmpresa}
+            crearEmpresa={crearEmpresa}
+          />
+        )}
+        {infoEmpresa.section === 'socios/accionistas' && (
+          <FormSociosAccioniastas
+            data={infoEmpresa.infoEmpresa as CrearEmpresa[]}
             setCrearEmpresa={setCrearEmpresa}
             crearEmpresa={crearEmpresa}
           />
