@@ -596,11 +596,30 @@ const FormSociosAccioniastas = ({
           </div>
         ))}
       </div>
-      <div className="flex flex-col gap-y-2">
-        {crearEmpresa.section6.socios_accionistas.map((item) => (
+      <div className="container mx-auto">
+        <table className="min-w-full bg-white">
+          <tbody>
+            {crearEmpresa.section6.socios_accionistas.map((item) => (
+              <tr key={item.id}>
+                <td className="w-5/12 font-ember font-semibold text-[14px] text-custom-gris-2">{item.Nombre}</td>
+                <td className="font-ember font-semibold text-[14px] text-custom-gris-2">{item.Rut}</td>
+                <td className="font-ember font-semibold text-[14px] text-custom-gris-2">{item.Participación}</td>
+                <td className="font-ember font-semibold text-[14px] text-custom-gris-2">{item.Acciones}</td>
+                <td>
+                  <button
+                    onClick={(e) => deleteSocioAccionista(e, item.id)}
+                    className="w-10/12 border-[1px] border-custom-gris-2 px-[10px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* {crearEmpresa.section6.socios_accionistas.map((item) => (
           <div key={item.id} className="flex w-full">
             <div className="flex w-9/12 justify-start items-center">
-              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/3">{item.Nombre}</p>
+              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/2">{item.Nombre}</p>
               <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/4">{item.Rut}</p>
               <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/6">{item.Participación}</p>
               <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/6">{item.Acciones}</p>
@@ -611,7 +630,7 @@ const FormSociosAccioniastas = ({
               Eliminar
             </button>
           </div>
-        ))}
+        ))} */}
       </div>
       <div className="flex items-start">
         <button

@@ -11,6 +11,7 @@ import {
   usuariosSistema,
   periodoContable,
   régimenTributario,
+  sociosAccionistas,
 } from '@/types/formCrearEmpresa';
 const styleH1 = 'font-ember font-normal text-[14px]';
 
@@ -77,8 +78,8 @@ const Sections1and2 = ({ section }: { section: datosEmpresa | datosContador }) =
             ([key, value]) =>
               key !== 'sectionName' && (
                 <div key={key} className="flex items-center gap-x-1">
-                  <p className="font-ember font-normal text-[12px] text-custom-gris-2">{key}:</p>
-                  <p className="font-ember font-medium text-[12px] text-custom-gris-2">{value}</p>
+                  <p className="font-ember font-medium text-[12px] text-custom-negro-1">{key}:</p>
+                  <p className="font-ember font-normal text-[12px] text-custom-gris-2">{value}</p>
                 </div>
               ),
           )}
@@ -94,8 +95,8 @@ const Section3 = ({ section }: { section: usuariosSistema }) => {
       <h1 className={`${styleH1}`}>{section.sectionName}</h1>
       {section.usuarios_del_sistema.map((item) => (
         <div className="flex gap-x-7 justify-start" key={item.id}>
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2 w-2/12">{item.Nombre}</p>
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2 w-7/12">{item.Correo}</p>
+          <p className="font-ember font-normal text-[12px] text-custom-gris-2 w-2/12">{item.Nombre}</p>
+          <p className="font-ember font-normal text-[12px] text-custom-gris-2 w-7/12">{item.Correo}</p>
         </div>
       ))}
     </div>
@@ -107,8 +108,8 @@ const Section4 = ({ section }: { section: periodoContable }) => {
     <div>
       <h1 className={`${styleH1}`}>{section.sectionName}</h1>
       <div className="flex gap-x-2">
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">Año:</p>
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">{section.fecha}</p>
+        <p className="font-ember font-medium text-[12px] text-custom-negro-1">Año:</p>
+        <p className="font-ember font-normal text-[12px] text-custom-gris-2">{section.fecha}</p>
       </div>
     </div>
   );
@@ -119,36 +120,36 @@ const Section5 = ({ section }: { section: régimenTributario }) => {
     <div className="flex flex-col gap-y-1">
       <h1 className={`${styleH1}`}>{section.sectionName}</h1>
       <div className="flex gap-x-2">
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">Régimen tributario:</p>
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">
+        <p className="font-ember font-medium text-[12px] text-custom-negro-1">Régimen tributario:</p>
+        <p className="font-ember font-normal text-[12px] text-custom-gris-2">
           {(section.section1.Régimen_14A_semi_integrado === true && '14A semi integrado') ||
             (section.section1.Régimen_Propyme_14DN3 === true && 'Propyme 14DN°3') ||
             (section.section1.Régimen_Propyme_14DN8 === true && 'Propyme 14DN°8')}
         </p>
       </div>
       <div className="flex gap-x-2">
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">Tipo contabilidad:</p>
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">
+        <p className="font-ember font-medium text-[12px] text-custom-negro-1">Tipo contabilidad:</p>
+        <p className="font-ember font-normal text-[12px] text-custom-gris-2">
           {(section.section2.Contabilidad_completa === true && 'Contabilidad completa') ||
             (section.section2.Contabilidad_simplificada === true && 'Contabilidad simplificada')}
         </p>
       </div>
       <div className="flex flex-col">
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">Registro financiero:</p>
+        <p className="font-ember font-medium text-[12px] text-custom-negro-1">Registro financiero:</p>
         <div className="mx-5">
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2">
+          <p className="font-ember font-normal text-[12px] text-custom-gris-2">
             {section.section3.Libro_de_caja === true && '*Libro de caja'}
           </p>
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2">
+          <p className="font-ember font-normal text-[12px] text-custom-gris-2">
             {section.section3.Libro_de_ingresos_y_egresos === true && '*Libro de ingresos y egresos'}
           </p>
         </div>
       </div>
       <div className="flex gap-x-2">
-        <p className="font-ember font-medium text-[12px] text-custom-gris-2">Monto apertura libro caja:</p>
-        <div className="flex">
-          <p className="font-ember font-medium text-[12px] text-custom-gris-2">
-            {section.section3.Monto_apertura_libro_caja.monto}
+        <p className="font-ember font-medium text-[12px] text-custom-negro-1">Monto apertura libro caja:</p>
+        <div className="flex gap-x-1">
+          <p className="font-ember font-normal text-[12px] text-custom-gris-2">
+            ${section.section3.Monto_apertura_libro_caja.monto}
           </p>
           <p className="font-ember font-medium text-[12px] text-custom-gris-2">
             {section.section3.Monto_apertura_libro_caja.moneda}
@@ -159,11 +160,42 @@ const Section5 = ({ section }: { section: régimenTributario }) => {
   );
 };
 
+const Section6 = ({ section }: { section: sociosAccionistas }) => {
+  const cutText = (text: string) => {
+    let palabras = text.split(' ');
+    let dosPrimerasPalabras = palabras.slice(0, 2).join(' ');
+    return dosPrimerasPalabras;
+  };
+
+  return (
+    <div>
+      <h1 className={`${styleH1}`}>{section.sectionName}</h1>
+      <div className="container mx-auto">
+        <table className="min-w-full bg-white">
+          <tbody>
+            {section.socios_accionistas.map((item, index) => (
+              <tr key={item.id}>
+                <td className="font-ember font-normal text-[12px] text-custom-gris-2 w-auto py-1">
+                  {cutText(item.Nombre)}
+                </td>
+                <td className="font-ember font-normal text-[12px] text-custom-gris-2 w-auto py-1">{item.Rut}</td>
+                <td className="font-ember font-normal text-[12px] text-custom-gris-2 w-auto py-1">
+                  {item.Participación}
+                </td>
+                <td className="font-ember font-normal text-[12px] text-custom-gris-2 w-auto py-1">{item.Acciones}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
 export const ResumenMenu = () => {
   const { section1, section2, section3, section4, section5, section6 } = useSelector(
     (state: RootState) => state.formCrearEmpresa,
   );
-  console.log(section6);
   return (
     <div className="h-[300px] overflow-y-auto">
       <div className="flex flex-col gap-y-4">
@@ -172,6 +204,7 @@ export const ResumenMenu = () => {
         <Section3 section={section3} />
         <Section4 section={section4} />
         <Section5 section={section5} />
+        <Section6 section={section6} />
       </div>
     </div>
   );
