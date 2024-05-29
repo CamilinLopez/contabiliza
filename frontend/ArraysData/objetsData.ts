@@ -176,7 +176,7 @@ export const sociosAccionistas: TypeCrearempresa = {
     },
     {
       id: 'piekjaqg10',
-      name: '%Participación',
+      name: 'Participación',
       placeholder: '40.1111%',
       text: 'Participación',
     },

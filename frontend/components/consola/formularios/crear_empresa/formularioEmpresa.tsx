@@ -1,7 +1,7 @@
 'use client';
 
 import { Options, PeriodoContable, RegimenTributario, CrearEmpresa } from '@/types/createEmpresa';
-import { FormCrearEmpresatype, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
+import { FormCrearEmpresatype, dataSociosAccionista, dataUsuaruosSistema } from '@/types/formCrearEmpresa';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '@/redux/store';
@@ -12,8 +12,10 @@ import {
   updateSection3,
   updateSection4,
   updateSection5,
+  updateSection6,
 } from '@/redux/slice/formCrearEmpresa';
 import { crearEmpresaInitialState } from '@/initialState';
+import { isEmpty } from '@/components/utils';
 
 const FormCrearempresa = ({
   data,
@@ -166,13 +168,15 @@ const FormUsuarioSistema = ({
   const addUsers = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const newUser = { ...usuariSistema, id: uuidv4() };
-    setCrearEmpresa((prevState) => ({
-      ...prevState,
-      section3: {
-        ...prevState.section3,
-        usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema, newUser],
-      },
-    }));
+    if (isEmpty(newUser)) {
+      setCrearEmpresa((prevState) => ({
+        ...prevState,
+        section3: {
+          ...prevState.section3,
+          usuarios_del_sistema: [...prevState.section3.usuarios_del_sistema, newUser],
+        },
+      }));
+    }
     setUsuariSistema({ id: '', Correo: '', Nombre: '' });
   };
   const deleteUesr = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
@@ -525,6 +529,53 @@ const FormSociosAccioniastas = ({
   setCrearEmpresa: React.Dispatch<React.SetStateAction<FormCrearEmpresatype>>;
   crearEmpresa: FormCrearEmpresatype;
 }) => {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSection6(crearEmpresa.section6));
+  }, [crearEmpresa.section6, dispatch]);
+
+  const [sociosAccionistas, setSociosAccionistas] = useState<dataSociosAccionista>({
+    id: '',
+    Nombre: '',
+    Rut: '',
+    Participación: '',
+    Acciones: '',
+  });
+
+  const addSocioAccionista = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const newSocioAccionista = { ...sociosAccionistas, id: uuidv4() };
+    if (isEmpty(newSocioAccionista)) {
+      setCrearEmpresa((prevState) => ({
+        ...prevState,
+        section6: {
+          ...prevState.section6,
+          socios_accionistas: [...prevState.section6.socios_accionistas, newSocioAccionista],
+        },
+      }));
+    }
+    setSociosAccionistas({ ...sociosAccionistas, id: '', Acciones: '', Nombre: '', Participación: '', Rut: '' });
+  };
+
+  const deleteSocioAccionista = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    e.preventDefault();
+    setCrearEmpresa((prevState) => ({
+      ...prevState,
+      section6: {
+        ...prevState.section6,
+        socios_accionistas: [...prevState.section6.socios_accionistas.filter((item) => item.id !== id)],
+      },
+    }));
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSociosAccionistas({
+      ...sociosAccionistas,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
+  };
+
   return (
     <div className="flex flex-col gap-y-7">
       <p className="font-ember font-normal text-[14px] text-custom-gris-2">
@@ -539,14 +590,32 @@ const FormSociosAccioniastas = ({
               type="text"
               placeholder={item.placeholder}
               name={item.name}
-              value={crearEmpresa.section1[item.name as keyof typeof crearEmpresa.section1]}
+              value={sociosAccionistas[item.name as keyof dataSociosAccionista]}
+              onChange={handleOnChange}
             />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col gap-y-2">
+        {crearEmpresa.section6.socios_accionistas.map((item) => (
+          <div key={item.id} className="flex w-full">
+            <div className="flex w-9/12 justify-start items-center">
+              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/3">{item.Nombre}</p>
+              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/4">{item.Rut}</p>
+              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/6">{item.Participación}</p>
+              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/6">{item.Acciones}</p>
+            </div>
+            <button
+              onClick={(e) => deleteSocioAccionista(e, item.id)}
+              className="w-1/5 border-[1px] border-custom-gris-2 px-[10px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
+              Eliminar
+            </button>
           </div>
         ))}
       </div>
       <div className="flex items-start">
         <button
-          onClick={(e) => e.preventDefault()}
+          onClick={addSocioAccionista}
           className="border-[1px] border-custom-gris-2 px-[20px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
           Agrega un socio/accionista
         </button>

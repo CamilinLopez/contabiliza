@@ -23,12 +23,22 @@ const formCrearEmpresaSlice = createSlice({
     updateSection5(state, action: PayloadAction<typeof initialState.section5>) {
       state.section5 = action.payload;
     },
+    updateSection6(state, action: PayloadAction<typeof initialState.section6>) {
+      state.section6 = action.payload;
+    },
     updateAll(state, action: PayloadAction<typeof initialState>) {
       return action.payload;
     },
   },
 });
 
-export const { updateSection1, updateSection2, updateSection3, updateSection4, updateSection5, updateAll } =
-  formCrearEmpresaSlice.actions;
+export const {
+  updateSection1,
+  updateSection2,
+  updateSection3,
+  updateSection4,
+  updateSection5,
+  updateSection6,
+  updateAll,
+} = formCrearEmpresaSlice.actions;
 export default formCrearEmpresaSlice.reducer;

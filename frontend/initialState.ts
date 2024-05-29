@@ -1,4 +1,6 @@
-export const crearEmpresaInitialState = {
+import { FormCrearEmpresatype } from './types/formCrearEmpresa';
+
+export const crearEmpresaInitialState: FormCrearEmpresatype = {
   id: '',
   section1: {
     sectionName: 'Datos de la empresa',
@@ -45,5 +47,9 @@ export const crearEmpresaInitialState = {
         monto: '0',
       },
     },
+  },
+  section6: {
+    sectionName: 'Socios/accionistas',
+    socios_accionistas: [],
   },
 };

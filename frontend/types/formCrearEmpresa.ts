@@ -63,6 +63,19 @@ export interface régimenTributario {
   section3: registroFinanciero;
 }
 
+export interface dataSociosAccionista {
+  id: string;
+  Nombre: string;
+  Rut: number | string;
+  Participación: number | string;
+  Acciones: number | string;
+}
+
+export interface sociosAccionistas {
+  sectionName: string;
+  socios_accionistas: dataSociosAccionista[];
+}
+
 export interface FormCrearEmpresatype {
   id: string;
   section1: datosEmpresa;
@@ -70,4 +83,5 @@ export interface FormCrearEmpresatype {
   section3: usuariosSistema;
   section4: periodoContable;
   section5: régimenTributario;
+  section6: sociosAccionistas;
 }

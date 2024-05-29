@@ -20,7 +20,7 @@ export default function CrearEmpresa() {
         <CompanyData title="Usuarios del sistema - opcional" data={usuarioSistema} />
         <CompanyData title="Periodo contable" data={periodoContable} />
         <CompanyData title="Régimen tributario" data={regimenTributario} />
-        <CompanyData title="Socios/accionistas" data={sociosAccionistas} />
+        <CompanyData title="Socios/accionistas - opcional" data={sociosAccionistas} />
       </div>
       <div id="resumen" className="bg-white w-4/12 sticky top-2 h-full z-0">
         <Resumen />

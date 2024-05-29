@@ -160,10 +160,10 @@ const Section5 = ({ section }: { section: régimenTributario }) => {
 };
 
 export const ResumenMenu = () => {
-  const { section1, section2, section3, section4, section5 } = useSelector(
+  const { section1, section2, section3, section4, section5, section6 } = useSelector(
     (state: RootState) => state.formCrearEmpresa,
   );
-
+  console.log(section6);
   return (
     <div className="h-[300px] overflow-y-auto">
       <div className="flex flex-col gap-y-4">
