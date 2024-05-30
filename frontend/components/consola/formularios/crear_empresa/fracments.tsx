@@ -197,7 +197,7 @@ export const ResumenMenu = () => {
     (state: RootState) => state.formCrearEmpresa,
   );
   return (
-    <div className="h-[300px] overflow-y-auto">
+    <div className="h-[317px] overflow-y-auto">
       <div className="flex flex-col gap-y-4">
         <Sections1and2 section={section1} />
         <Sections1and2 section={section2} />
@@ -209,3 +209,4 @@ export const ResumenMenu = () => {
     </div>
   );
 };
+

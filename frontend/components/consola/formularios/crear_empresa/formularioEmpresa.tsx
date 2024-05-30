@@ -616,21 +616,6 @@ const FormSociosAccioniastas = ({
             ))}
           </tbody>
         </table>
-        {/* {crearEmpresa.section6.socios_accionistas.map((item) => (
-          <div key={item.id} className="flex w-full">
-            <div className="flex w-9/12 justify-start items-center">
-              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/2">{item.Nombre}</p>
-              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/4">{item.Rut}</p>
-              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/6">{item.Participación}</p>
-              <p className="font-ember font-semibold text-[14px] text-custom-gris-2 w-1/6">{item.Acciones}</p>
-            </div>
-            <button
-              onClick={(e) => deleteSocioAccionista(e, item.id)}
-              className="w-1/5 border-[1px] border-custom-gris-2 px-[10px] py-[4px] font-ember font-medium text-[14px] text-custom-gris-2 hover:border-custom-negro-2 hover:text-custom-negro-2">
-              Eliminar
-            </button>
-          </div>
-        ))} */}
       </div>
       <div className="flex items-start">
         <button
